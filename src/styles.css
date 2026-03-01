@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+@import 'flowbite/src/themes/default';
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@utility container {
+  margin-inline: auto;
+}
+
+@theme {
+  --color-mainColor: #256af4;
+  --color-secondColor: #f0f2f5;
+}
+
+@layer components{
+  .activeLink{
+    @apply bg-mainColor text-white
+  }
+}
+/* body{
+  font-family: "Cairo", sans-serif;
+} */

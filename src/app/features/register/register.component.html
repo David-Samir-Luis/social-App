@@ -1,0 +1,252 @@
+<!-- Right Side: Registration Form -->
+<div
+  class="w-full h-full flex flex-col justify-center items-center p-8 lg:p-16 lg:py-7 bg-white dark:bg-[#101622]"
+>
+  <div class="w-full max-w-md">
+    <!-- Mobile Logo -->
+    <div class="lg:hidden mb-8 flex items-center gap-2">
+      <span class="material-symbols-outlined text-mainColor text-3xl font-bold"
+        ><i class="fa-brands fa-hive"></i
+      ></span>
+      <span class="text-xl font-bold text-slate-900 dark:text-white">Vexa</span>
+    </div>
+
+    <!-- Heading -->
+    <div class="mb-10">
+      <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">
+        Create New Account
+      </h2>
+      <p class="text-slate-500 dark:text-slate-400">
+        Fill in your details to get started with the community.
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="space-y-5">
+      <!-- Full Name -->
+      <div>
+        <div class="relative">
+          <input
+            formControlName="name"
+            type="text"
+            id="fullName"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            [class]="{
+              'border-rose-300':registerForm.get('name')?.invalid && registerForm.get('name')?.touched,
+              'focus:border-rose-400':registerForm.get('name')?.invalid && registerForm.get('name')?.touched
+            }"
+            placeholder=" "
+          />
+          <label
+            for="fullName"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >Full name</label
+          >
+        </div>
+        @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+          @if (registerForm.get('name')?.hasError('required')) {
+            <p class="mt-1 text-xs font-semibold text-rose-600">Full name is required.</p>
+          }
+          @else if (registerForm.get('name')?.hasError('minlength')) {
+            <p class="mt-1 text-xs font-semibold text-rose-600">
+              Name must be at least 2 characters.
+            </p>
+          }
+        }
+      </div>
+
+      <!-- userName -->
+     <div>
+       <div class="relative">
+        <input
+          formControlName="username"
+          type="text"
+          id="userName"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+          placeholder=" "
+        />
+        <label
+          for="userName"
+          class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+          >Username (optional)
+        </label>
+      </div>
+            <p class="mt-1 text-xs font-semibold text-rose-600">{{errorMessage.startsWith('username')? errorMessage:''}}</p>
+
+     </div>
+
+      <!-- Email address -->
+      <div>
+        <div class="relative">
+        <input
+          formControlName="email"
+          type="email"
+          id="email"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+          [class]="{
+              'border-rose-300':registerForm.get('email')?.invalid && registerForm.get('email')?.touched,
+              'focus:border-rose-400':registerForm.get('email')?.invalid && registerForm.get('email')?.touched
+            }"
+          placeholder=" "
+        />
+        <label
+          for="email"
+          class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+          >Email address
+        </label>
+      </div>
+      @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+        @if (registerForm.get('email')?.hasError('required')) {
+          <p class="mt-1 text-xs font-semibold text-rose-600">Email is required.</p>
+        }
+        @else if (registerForm.get('email')?.hasError('email')) {
+          <p class="mt-1 text-xs font-semibold text-rose-600">Please enter a valid email address.</p>
+        }
+      }
+      <p class="mt-1 text-xs font-semibold text-rose-600">{{errorMessage.startsWith('user ')? errorMessage:''}}</p>
+
+      </div>
+
+      <!-- gender  + DateOfBirth -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- gender -->
+       <div>
+         <div class="relative">
+          <select
+            formControlName="gender"
+            id="gender"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            [class]="{
+              'border-rose-300':registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched,
+              'focus:border-rose-400':registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched
+            }"
+            placeholder=" "
+          >
+            <option selected hidden disabled value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <label
+            for="gender"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >Select gender</label
+          >
+        </div>
+        @if (registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched){
+          <p class="mt-1 text-xs font-semibold text-rose-600">Gender is required.</p>
+        }
+       </div>
+        <!-- DateOfBirth -->
+        <div>
+          <div class="relative">
+          <input
+            formControlName="dateOfBirth"
+            type="date"
+            id="date"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            [class]="{
+              'border-rose-300':registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched,
+              'focus:border-rose-400':registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched
+            }"
+            placeholder=" "
+          />
+          <label
+            for="date"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >Email address
+          </label>
+        </div>
+         @if (registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched){
+          <p class="mt-1 text-xs font-semibold text-rose-600">Date of birth is required.</p>
+        }
+        </div>
+      </div>
+      <!-- Password -->
+      <div>
+        <div class="relative">
+        <input #pass
+          formControlName="password"
+          type="password"
+          id="password"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+          [class]="{
+              'border-rose-300':registerForm.get('password')?.invalid && registerForm.get('password')?.touched,
+              'focus:border-rose-400':registerForm.get('password')?.invalid && registerForm.get('password')?.touched
+            }"
+          placeholder=" "
+        />
+        <label
+          for="password"
+          class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+          >Password</label
+        >
+        <span (click)="toggleShowPassword(pass)" class="absolute top-1/2 -translate-y-1/2 inset-e-4 cursor-pointer">
+          <i [class]="pass.type==='text'?'fa-eye':'fa-eye-slash'" class="fa-regular "></i>
+        </span>
+      </div>
+      @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+        @if (registerForm.get('password')?.hasError('required')) {
+          <p class="mt-1 text-xs font-semibold text-rose-600">password is required.</p>
+        }
+        @else if (registerForm.get('password')?.hasError('pattern')) {
+          <p class="mt-1 text-xs font-semibold text-rose-600">Password must include uppercase, lowercase, number, and special character.</p>
+        }
+      }
+      </div>
+      <!-- Confirm password -->
+     <div>
+       <div class="relative">
+        <input
+        #repass
+          formControlName="rePassword"
+          type="password"
+          id="repassword"
+          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+          [class]="{
+              'border-rose-300':registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched,
+              'focus:border-rose-400':registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched
+            }"
+          placeholder=" "
+        />
+        <label
+          for="repassword"
+          class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+          >Confirm password</label
+        >
+         <span (click)="toggleShowPassword(repass)" class="absolute top-1/2 -translate-y-1/2 inset-e-4 cursor-pointer">
+          <i [class]="repass.type==='text'?'fa-eye':'fa-eye-slash'" class="fa-regular "></i>
+        </span>
+      </div>
+      @if (registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched) {
+        @if (registerForm.get('rePassword')?.hasError('required')) {
+          <p class="mt-1 text-xs font-semibold text-rose-600">Please confirm your password.</p>
+        }
+        @else if (registerForm.get('rePassword')?.hasError('mismatch')) {
+          <p class="mt-1 text-xs font-semibold text-rose-600">Passwords do not match.</p>
+        }
+      }
+     </div>
+
+      <!-- Submit -->
+      <div class="pt-4">
+        <button
+        [disabled]="loading"
+          type="submit"
+          class="w-full disabled:cursor-not-allowed disabled:bg-mainColor/60 cursor-pointer bg-mainColor hover:bg-mainColor/90 text-white font-bold py-3.5 rounded-lg shadow-lg shadow-mainColor/25 transition-all flex items-center justify-center gap-2"
+        >
+         @if (loading) {
+          <span>Please wait...</span>
+         }@else {
+          <span>Create New Account</span>
+         }
+        </button>
+      </div>
+
+      <!-- Login Link -->
+      <p class="text-center text-sm text-slate-500 dark:text-slate-400 mt-8">
+        Already have an account?
+        <a routerLink="/login" class="text-mainColor font-bold cursor-pointer hover:underline">Log In</a>
+      </p>
+    </form>
+  </div>
+</div>
