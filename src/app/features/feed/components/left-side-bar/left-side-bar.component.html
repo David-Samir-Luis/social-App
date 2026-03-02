@@ -1,1 +1,43 @@
-<p>left-side-bar works!</p>
+<aside
+      class="w-full text-sm sticky top-21 bg-white rounded-[20px] shadow-sm border border-slate-50 p-2.5 flex flex-col gap-1"
+      aria-label="Sidebar Navigation"
+    >
+      <button  (click)="setActive('feed')"
+      [class]='activeBtn==="feed"?  "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
+        class="flex items-center gap-4 p-2 cursor-pointer rounded-xl font-semibold transition-colors duration-200 "
+      >
+        <i class="fa-regular fa-newspaper w-5 text-center group-hover:text-slate-700 transition-colors"></i>
+        <span class="">Feed</span>
+      </button>
+
+      <button  (click)="setActive('posts')"
+      [class]='activeBtn ==="posts"? "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
+        class="flex items-center gap-4 p-2 cursor-pointer rounded-xl font-semibold transition-colors duration-200 "
+      >
+        <i
+          class="fa-solid fa-wand-magic-sparkles w-5 text-center group-hover:text-slate-700 transition-colors"
+        ></i>
+        <span class="">My Posts</span>
+      </button>
+
+      <button  (click)="setActive('Community')"
+      [class]='activeBtn==="Community"?  "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
+        class="flex items-center gap-4 p-2 cursor-pointer rounded-xl font-semibold transition-colors duration-200 "
+      >
+        <i
+          class="fa-solid fa-globe w-5 text-center group-hover:text-slate-700 transition-colors"
+        ></i>
+        <span class="">Community</span>
+      </button>
+
+      <button  (click)="setActive('Saved')"
+      [class]='activeBtn==="Saved" ? "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
+        class="flex items-center gap-4 p-2 cursor-pointer rounded-xl font-semibold transition-colors duration-200 "
+      >
+        <i
+          class="fa-regular fa-bookmark w-5 text-center group-hover:text-slate-700 transition-colors"
+        ></i>
+        <span class="">Saved</span>
+      </button>
+    </aside>
+

@@ -14,9 +14,7 @@
 }
 
 @layer components{
-  .activeLink{
-    @apply bg-mainColor text-white
-  }
+  
 }
 /* body{
   font-family: "Cairo", sans-serif;

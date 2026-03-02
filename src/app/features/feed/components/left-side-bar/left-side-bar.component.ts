@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class LeftSideBarComponent {
 
+  activeBtn:string='feed';
+  setActive(btn:string):void{
+    this.activeBtn=btn;
+  }
+
 }
