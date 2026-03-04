@@ -31,4 +31,16 @@ export class PostsService {
   deletePost(postId:string):Observable<any>{
     return this.httpClient.delete(`${environment.baseUrl}/posts/${postId}`,this.headers)
   }
+  updatePost(postId:string,body:object):Observable<any>{
+    return this.httpClient.put(`${environment.baseUrl}/posts/${postId}`,body,this.headers)
+  }
+
+  bookmarkPost(postId:string):Observable<any>{
+    return this.httpClient.put(`${environment.baseUrl}/posts/${postId}/bookmark`,'',this.headers)
+  }
+  likeOnPost(postId:string):Observable<any>{
+    return this.httpClient.put(`${environment.baseUrl}/posts/${postId}/like`,'',this.headers)
+  }
+
+  
 }

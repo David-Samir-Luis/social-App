@@ -11,6 +11,7 @@ import { NotificationComponent } from './features/notification/notification.comp
 import { ChangePasswordComponent } from './features/change-password/change-password.component';
 import { hasTokenGuard } from './core/auth/guards/has-token-guard';
 import { isLoginedGuard } from './core/auth/guards/is-logined-guard';
+import { SuggestionsComponent } from './features/suggestions/suggestions.component';
 
 export const routes: Routes = [
     {path:"" ,redirectTo:"login", pathMatch:"full"},
@@ -27,7 +28,8 @@ export const routes: Routes = [
         {path:"feed" ,component:FeedComponent , title:"feed page"},
         {path:"profile" ,component:ProfileComponent , title:"profile page"},
         {path:"notification",component:NotificationComponent , title:"notification page"},
-        {path:"changePassword",component:ChangePasswordComponent , title:"change password page"}
+        {path:"changePassword",component:ChangePasswordComponent , title:"change password page"},
+        {path:"suggestions",component:SuggestionsComponent , title:"suggestions page"}
     ]},
     {path: "**" ,component:NotFoundComponent , title:"not found page"}
 ];
