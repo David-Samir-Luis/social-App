@@ -8,27 +8,23 @@ import { environment } from '../../../../../../environments/environment';
 })
 export class CommentService {
   private readonly httpClient = inject(HttpClient)
-headers:object={
-        headers:{
-          'AUTHORIZATION':`Bearer ${localStorage.getItem('socialToken')}`
-        }
-      }
+
 
   getPostComments(postId:string):Observable<any>{
-    return this.httpClient.get(`${environment.baseUrl}/posts/${postId}/comments?page=1&limit=10`,this.headers)
+    return this.httpClient.get(`${environment.baseUrl}/posts/${postId}/comments?page=1&limit=10`)
   }
   CreateComment(postId:string,body:object):Observable<any>{
-    return this.httpClient.post(`${environment.baseUrl}/posts/${postId}/comments`,body,this.headers)
+    return this.httpClient.post(`${environment.baseUrl}/posts/${postId}/comments`,body)
   }
 
   deleteComment(postId:string,commentId:string):Observable<any>{
-    return this.httpClient.delete(`${environment.baseUrl}/posts/${postId}/comments/${commentId}`,this.headers)
+    return this.httpClient.delete(`${environment.baseUrl}/posts/${postId}/comments/${commentId}`)
   }
   updateComment(postId:string,commentId:string,body:object):Observable<any>{
-    return this.httpClient.put(`${environment.baseUrl}/posts/${postId}/comments/${commentId}`,body,this.headers)
+    return this.httpClient.put(`${environment.baseUrl}/posts/${postId}/comments/${commentId}`,body)
   }
     likeOnComment(postId:string,commentId:string):Observable<any>{
-    return this.httpClient.put(`${environment.baseUrl}/posts/${postId}/comments/${commentId}/like`,'',this.headers)
+    return this.httpClient.put(`${environment.baseUrl}/posts/${postId}/comments/${commentId}/like`,'')
   }
 
 }

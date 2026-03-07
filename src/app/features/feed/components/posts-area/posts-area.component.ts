@@ -36,10 +36,6 @@ export class PostsAreaComponent implements OnInit {
         this.postsList = res.data.posts;
 
       },
-      error: (err) => {
-        console.log(err);
-
-      },
       
     })
 
@@ -80,9 +76,6 @@ export class PostsAreaComponent implements OnInit {
         
        }
       },
-      error:(err)=>{
-        console.log(err);
-      }
     })
   }
 

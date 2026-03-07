@@ -36,9 +36,7 @@ export class SinglePostComponent implements OnInit{
           this.callParentFunction.emit();
         }
       },
-      error:(err)=>{
-        console.log(err);
-      }
+     
   
     })
     }
@@ -69,10 +67,7 @@ export class SinglePostComponent implements OnInit{
           next:(res)=>{
             
           },
-          error:(err)=>{
-            console.log(err);
-            
-          }
+         
         })
       }
   
@@ -84,10 +79,6 @@ export class SinglePostComponent implements OnInit{
         next:(res)=>{
           
         },
-        error:(err)=>{
-          console.log(err);
-           post.bookmarked=!post.bookmarked;
-        }
   
       })
     }
@@ -112,9 +103,6 @@ export class SinglePostComponent implements OnInit{
           console.log(res);
           post.likes=res.data.post.likes;
         },
-        error:(err)=>{
-          console.log(err);
-        }
       })
     }
   

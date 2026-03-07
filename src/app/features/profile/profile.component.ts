@@ -25,8 +25,6 @@ export class ProfileComponent  implements OnInit{
   viewImageFlag:string='';
   activeTab:'myposts'|'saved'='myposts'
   PostsList:Ipost[]=[];
-  
-  
 
   ngOnInit(): void {
     this.getMyProfileData();
@@ -39,12 +37,6 @@ export class ProfileComponent  implements OnInit{
         this.myProfile=res.data.user;
         this.userDataService.profilePhotoUrl=this.myProfile.photo;
       },
-      error:(err)=>{
-          console.log(err);
-          
-      },
-     
-      
     })
   }
 
@@ -58,10 +50,6 @@ export class ProfileComponent  implements OnInit{
     this.activeTab='myposts'
         
       },
-      error:(err)=>{
-          console.log(err);
-          
-      }
     })
   }
   getbookmarksData():void{
@@ -73,10 +61,7 @@ export class ProfileComponent  implements OnInit{
         this.activeTab='saved'
         
       },
-      error:(err)=>{
-          console.log(err);
-          
-      }
+    
     })
   }
 
@@ -96,9 +81,6 @@ export class ProfileComponent  implements OnInit{
       next:(res)=>{
         
       },
-      error:(err)=>{
-        console.log(err);
-      },
       complete:()=>{
         this.getMyProfileData();
       }
@@ -108,9 +90,6 @@ export class ProfileComponent  implements OnInit{
     this.userService.uploadProfilePhoto(body).subscribe({
       next:(res)=>{
         
-      },
-      error:(err)=>{
-        console.log(err);
       },
       complete:()=>{
         this.getMyProfileData();
@@ -179,15 +158,7 @@ export class ProfileComponent  implements OnInit{
     }
     removeCover(){
       this.myProfile.cover='';
-      this.userService.removeCoverPhoto().subscribe({
-        next:(res)=>{
-          
-        },
-        error:(err)=>{
-          console.log(err);
-          
-        }
-      });
+      this.userService.removeCoverPhoto().subscribe();
     }
 
 viewImage(ImageToView:'cover'|'photo'):void{

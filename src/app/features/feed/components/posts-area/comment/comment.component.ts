@@ -47,10 +47,6 @@ export class CommentComponent implements OnInit {
         next:(res)=>{
           this.commentsList=res.data.comments;
         },
-        error:(err)=>{
-          console.log(err);
-          
-        },
         complete:()=>{
           setTimeout(() => initFlowbite(), 0);
         }
@@ -118,9 +114,6 @@ export class CommentComponent implements OnInit {
         
        }
       },
-      error:(err)=>{
-        console.log(err);
-      }
     })
   }
   deletecommentItem(commentId:string):void{
@@ -138,9 +131,6 @@ export class CommentComponent implements OnInit {
         this.commentsList.splice(index,1)
       }
     },
-    error:(err)=>{
-      console.log(err);
-    }
 
   })
   }
@@ -175,10 +165,6 @@ saveCommentChanges(comment:Icomment){
           console.log(res);
           
         },
-        error:(err)=>{
-          console.log(err);
-          
-        }
       })
     }
 }
@@ -188,9 +174,6 @@ likeComment(comment:Icomment):void{
       next:(res)=>{
         comment.likes=res.data.comment.likes;
       },
-      error:(err)=>{
-        console.log(err);
-      }
 
     })
   }

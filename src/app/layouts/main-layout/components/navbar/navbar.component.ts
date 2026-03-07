@@ -34,10 +34,7 @@ export class NavbarComponent implements OnInit{
         this.userDataService._id=this.profileData._id;
 
       },
-      error:(err)=>{
-          console.log(err);
-          
-      },
+     
     
     })
   }

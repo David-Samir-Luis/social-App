@@ -34,10 +34,6 @@ export class RightSidebarComponent implements OnInit{
       next:(res)=>{
         this.SuggestionList=res.data.suggestions;
       },
-      error:(err)=>{
-        console.log(err);
-        
-      }
     })
   }
 
