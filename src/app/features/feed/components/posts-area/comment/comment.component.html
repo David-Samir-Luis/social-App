@@ -31,7 +31,7 @@
                 <div>
                   <p class="text-xs font-bold text-slate-900">{{ comment.commentCreator.name }}</p>
                   <p class="text-xs text-slate-500">
-                    @{{ comment.commentCreator.username }} · {{ comment.createdAt }}
+                    @{{ comment.commentCreator.username }} · {{ comment.createdAt |timeAgo |async}}
                   </p>
                 </div>
               </div>
@@ -64,7 +64,7 @@
             </div>
             <div class="mt-1.5 flex items-center justify-between px-1">
               <div class="flex items-center gap-4">
-                <span class="text-xs font-semibold text-slate-400">{{ comment.createdAt }}</span
+                <span class="text-xs font-semibold text-slate-400">{{ comment.createdAt |timeAgo |async}}</span
                 ><button (click)="likeComment(comment)"
                   [class]="comment.likes.length>0?  'text-[#1877f2]':'text-slate-500'"
                   class="text-xs cursor-pointer font-semibold hover:underline disabled:opacity-60 "
@@ -193,9 +193,9 @@
     <form (submit)="submitForm($event)" class="mt-3">
       <div class="flex items-start gap-2">
         <img
-          alt="david"
+          [alt]="userDataService.name"
           class="h-9 w-9 rounded-full object-cover"
-          src="https://pub-3cba56bacf9f4965bbb0989e07dada12.r2.dev/linkedPosts/1772466522370-9e6f1097-4b53-4d18-9336-b0306c61aa27-default-profile.webp"
+          [src]="userDataService.profilePhotoUrl"
         />
         <div
           class="w-full rounded-2xl border border-slate-200 bg-secondColor px-2.5 py-1.5 focus-within:border-[#c7dafc] focus-within:bg-white"
@@ -203,7 +203,7 @@
         >
           <textarea
             [formControl]="content"
-            placeholder="Comment as david..."
+            placeholder="Comment as {{userDataService.name}}..."
             rows="1"
             class="max-h-35 min-h-10 w-full border-0 resize-none bg-transparent px-2 py-1.5 text-sm leading-5 outline-none placeholder:text-slate-500"
             style="height: 40px"

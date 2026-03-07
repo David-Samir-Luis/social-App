@@ -48,37 +48,24 @@
             >{{SuggestionList.length}}</span
           >
         </div>
-        <label class="relative mb-4 block"
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-search pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-            aria-hidden="true"
-          >
-            <path d="m21 21-4.34-4.34"></path>
-            <circle cx="11" cy="11" r="8"></circle></svg
-          ><input
-            placeholder="Search by name or username..."
-            class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-3 text-sm text-slate-700 outline-none focus:border-[#1877f2] focus:bg-white"
-            value=""
-        /></label>
-      <div class="grid gap-3 sm:grid-cols-2">
+
+        <app-search-friends-input (suggestedList)="getFollowSuggestionsByPageData($event)"></app-search-friends-input>
+      
+        <div class="grid gap-3 sm:grid-cols-2">
         @for (user of SuggestionList; track user._id) {
-        <app-sugested-user (functionCall)="getFollowSuggestionsByPageData(true)" [user]="user" ></app-sugested-user>
+        <app-sugested-user (functionCall)="callBackforFollowUser($event)" [user]="user" ></app-sugested-user>
+        }
+        @empty {
+          <p class="text-sm text-slate-500">No users matched your search.</p>
         }
       </div>
-        <button (click)="getFollowSuggestionsByPageData()"
+        @if (SuggestionList.length) {
+          <button (click)="getFollowSuggestionsByPageData(inputValue)"
           class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-100 disabled:opacity-60"
         >
           Load more users
         </button>
+        }
       </section>
     </div>
   </main>

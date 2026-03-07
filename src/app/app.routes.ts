@@ -4,7 +4,6 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { LoginComponent } from './features/login/login.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { NotFoundComponent } from './features/not-found/not-found.component';
-import { ForgetPasswordComponent } from './features/forget-password/forget-password.component';
 import { FeedComponent } from './features/feed/feed.component';
 import { ProfileComponent } from './features/profile/profile.component';
 import { NotificationComponent } from './features/notification/notification.component';
@@ -19,7 +18,7 @@ export const routes: Routes = [
         ,children:[
         {path:"login" ,component:LoginComponent , title:"login page"},
         {path:"register", component:RegisterComponent , title:"register page"},
-        {path:"forgetPassword", component:ForgetPasswordComponent , title:"forget password page"}
+       
 
     ]},
 
@@ -29,7 +28,8 @@ export const routes: Routes = [
         {path:"profile" ,component:ProfileComponent , title:"profile page"},
         {path:"notification",component:NotificationComponent , title:"notification page"},
         {path:"changePassword",component:ChangePasswordComponent , title:"change password page"},
-        {path:"suggestions",component:SuggestionsComponent , title:"suggestions page"}
+        {path:"suggestions",component:SuggestionsComponent , title:"suggestions page"},
+        {path: "**" ,component:NotFoundComponent , title:"not found page"}
     ]},
-    {path: "**" ,component:NotFoundComponent , title:"not found page"}
+    
 ];

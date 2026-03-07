@@ -11,13 +11,12 @@ export class SugestedUserComponent {
   @Input({required:true}) user!:IsuggestedUser;
   private readonly userService=inject(UserService);
 
-   @Output() functionCall = new EventEmitter<void>();
+   @Output() functionCall = new EventEmitter<string>();
 
   followUnfollowUserItem(userId:string):void{
     this.userService.followUnfollowUser(userId).subscribe({
       next:(res)=>{
-        console.log(res);
-        this.functionCall.emit();
+        this.functionCall.emit(userId);
       },
       error:(err)=>{
         console.log(err);

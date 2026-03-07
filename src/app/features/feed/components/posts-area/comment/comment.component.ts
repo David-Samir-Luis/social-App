@@ -3,14 +3,18 @@ import { CommentService } from './comment.service';
 import { initFlowbite } from 'flowbite';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Dropdown } from 'flowbite';
+import { UserDataService } from '../../../../../core/services/user-data.service';
+import { TimeAgoPipe } from '../../../../../shared/pipes/time-ago-pipe';
+import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-comment',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TimeAgoPipe,AsyncPipe],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css',
 })
 export class CommentComponent implements OnInit {
-  private readonly commentService = inject(CommentService)
+  private readonly commentService = inject(CommentService);
+  readonly userDataService = inject(UserDataService);
   commentsList:Icomment[]=[];
   imgFile!:File|null;
   @Input()showCommentsFlag!:boolean;
@@ -23,6 +27,7 @@ export class CommentComponent implements OnInit {
 
  ngOnInit(): void {
     this.GetPostCommentsData()
+    initFlowbite();
  }
  closeDropdown(commentId: string) {
   const $triggerEl = document.querySelector(`#dropdownMenuIconButton${commentId}`);
@@ -160,8 +165,8 @@ saveCommentChanges(comment:Icomment){
         formDate.append('content',this.editContent.value)
       }
 
-     const editcomment=this.commentsList.find((item)=>item._id===comment._id) as Icomment
-      editcomment.content=this.editContent.value;
+    //  const editcomment=this.commentsList.find((item)=>item._id===comment._id) as Icomment
+      comment.content=this.editContent.value;
 
       this.isEdit=false;
 
