@@ -7,7 +7,6 @@
             [alt]="post.user.name"
             class="size-10 rounded-full object-cover shrink-0 bg-slate-100 border border-slate-50"
           />
-
           <div>
             <span
               class="text-[15px] font-bold text-slate-900 leading-tight hover:underline cursor-pointer"
@@ -175,7 +174,7 @@
         <div class="flex items-center gap-3">
           <span class="cursor-pointer hover:underline">{{ post.sharesCount }} shares</span>
           <span class="cursor-pointer hover:underline">{{ post.commentsCount }} comments</span>
-          <button class="font-semibold cursor-pointer text-blue-600 hover:underline">
+          <button [routerLink]="['/details',post._id]" class="font-semibold cursor-pointer text-blue-600 hover:underline">
             View details
           </button>
         </div>
@@ -186,7 +185,7 @@
       <!-- buttons like - comment - share -->
       <div class="flex items-center justify-between px-1 py-1">
         <button (click)="likePost(post)"
-            [class]="post.likes.includes(post.user._id)? 'bg-[#e7f3ff] text-[#1877f2]':'hover:bg-slate-50 text-slate-600 '"
+            [class]="post.likes.includes(loginedUserId)? 'bg-[#e7f3ff] text-[#1877f2]':'hover:bg-slate-50 text-slate-600 '"
           class="flex-1 cursor-pointer flex items-center justify-center gap-2  font-semibold text-[14px]  py-2 rounded-md transition-colors"
         >
           <i class="fa-solid fa-thumbs-up text-lg"></i>

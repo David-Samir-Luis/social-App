@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, Input, input, OnInit } from '@angular/core';
 import { CommentService } from './comment.service';
 import { initFlowbite } from 'flowbite';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css',
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent implements OnInit ,AfterViewInit{
   private readonly commentService = inject(CommentService);
   readonly userDataService = inject(UserDataService);
   commentsList:Icomment[]=[];
@@ -27,8 +27,10 @@ export class CommentComponent implements OnInit {
 
  ngOnInit(): void {
     this.GetPostCommentsData()
-    initFlowbite();
  }
+  ngAfterViewInit(): void {
+    setTimeout(() => initFlowbite(), 0);
+  }
  closeDropdown(commentId: string) {
   const $triggerEl = document.querySelector(`#dropdownMenuIconButton${commentId}`);
   const $targetEl = document.querySelector(`#dropdownDots${commentId}`);

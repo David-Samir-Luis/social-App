@@ -1,18 +1,19 @@
 import { PostsService } from './../../../core/services/posts.service';
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Dropdown, initFlowbite } from 'flowbite';
 import { CommentComponent } from "../../../features/feed/components/posts-area/comment/comment.component";
 import { TimeAgoPipe } from '../../pipes/time-ago-pipe';
 import { AsyncPipe } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-single-post',
-  imports: [CommentComponent,ReactiveFormsModule, TimeAgoPipe,AsyncPipe],
+  imports: [CommentComponent, ReactiveFormsModule, TimeAgoPipe, AsyncPipe, RouterLink],
   templateUrl: './single-post.component.html',
   styleUrl: './single-post.component.css',
 })
-export class SinglePostComponent implements OnInit{
+export class SinglePostComponent implements AfterViewInit{
   @Input({required:true}) post!:Ipost;
   @Output() callParentFunction= new EventEmitter<void>();
    isEdit:boolean=false;
@@ -24,9 +25,11 @@ export class SinglePostComponent implements OnInit{
    
     editContent:FormControl=new FormControl('');
     editPrivacy:FormControl=new FormControl('');
-    ngOnInit(): void {
-      initFlowbite()
-    }
+
+    ngAfterViewInit(): void {
+    setTimeout(() => initFlowbite(), 0);
+  }
+
     deletePostItem(postId:string):void{
       this.closeDropdown(postId)
     this.postsService.deletePost(postId).subscribe({
@@ -36,8 +39,6 @@ export class SinglePostComponent implements OnInit{
           this.callParentFunction.emit();
         }
       },
-     
-  
     })
     }
   
@@ -100,7 +101,6 @@ export class SinglePostComponent implements OnInit{
     likePost(post:Ipost){
       this.postsService.likeOnPost(post._id).subscribe({
         next:(res)=>{
-          console.log(res);
           post.likes=res.data.post.likes;
         },
       })
