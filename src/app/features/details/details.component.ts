@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PostsService } from '../../core/services/posts.service';
 import { SinglePostComponent } from "../../shared/ui/single-post/single-post.component";
+import { LoadingComponent } from "../../shared/ui/loading/loading.component";
 
 @Component({
   selector: 'app-details',
-  imports: [SinglePostComponent, RouterLink],
+  imports: [SinglePostComponent, RouterLink, LoadingComponent],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css',
 })

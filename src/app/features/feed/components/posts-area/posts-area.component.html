@@ -95,7 +95,17 @@
     </div>
   </form>
 
-  @for (post of postsList; track post._id) {
-    <app-single-post (callParentFunction)="getAllPostsData()" [post]="post" ></app-single-post>
+@if (loading) {
+    <app-loading [loadingType]="'posts'"></app-loading>
+    <app-loading [loadingType]="'posts'"></app-loading>
+}@else {
+    @for (post of postsList; track post._id) {
+    <app-single-post (callParentFunction)="getPosts(tab)" [post]="post" ></app-single-post>
+    }
+  @empty {
+    <div class="rounded-2xl mt-4 border border-slate-200 bg-white p-10 text-center text-slate-500 shadow-sm">No posts yet. Be the first one to publish.</div>
   }
+
+
+}
 </section>

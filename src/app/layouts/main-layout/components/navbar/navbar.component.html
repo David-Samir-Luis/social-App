@@ -1,4 +1,4 @@
-@if (profileData) {
+@if (true) {
   
 <nav class="sticky top-0 z-40 border-b border-slate-200/90 bg-white/95 backdrop-blur">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-2 px-2 py-1.5 sm:gap-3 sm:px-3">
@@ -22,7 +22,8 @@
           data-dropdown-placement="bottom"
           class="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-2 py-1.5 transition hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300"
         >
-          <span class="sr-only">Open user menu</span>
+         @if (profileData) {
+           <span class="sr-only">Open user menu</span>
           <img class="h-8 w-8 rounded-full object-cover" [src]="userDataService.profilePhotoUrl" alt="user photo" />
           <span class="hidden max-w-35 truncate text-sm font-semibold text-slate-800 md:block">{{profileData.name}}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
@@ -30,6 +31,7 @@
             class="text-slate-500 hidden md:block" aria-hidden="true">
             <path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/>
           </svg>
+         }
         </button>
 
         <!-- Flowbite Dropdown: id="user-dropdown" and data-dropdown-toggle on button above are what Flowbite's JS hooks into -->

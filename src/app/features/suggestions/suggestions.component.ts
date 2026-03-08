@@ -4,10 +4,11 @@ import { SugestedUserComponent } from "../../shared/ui/sugested-user/sugested-us
 import { UserService } from '../../core/services/user.service';
 import { RouterLink } from "@angular/router";
 import { SearchFriendsInputComponent } from "../../shared/ui/search-friends-input/search-friends-input.component";
+import { LoadingComponent } from "../../shared/ui/loading/loading.component";
 
 @Component({
   selector: 'app-suggestions',
-  imports: [SugestedUserComponent, RouterLink, SearchFriendsInputComponent],
+  imports: [SugestedUserComponent, RouterLink, SearchFriendsInputComponent, LoadingComponent],
   templateUrl: './suggestions.component.html',
   styleUrl: './suggestions.component.css',
 })
@@ -15,6 +16,7 @@ export class SuggestionsComponent {
    private readonly userService=inject(UserService);
   nextPageNumber:number=1;
   inputValue:string='';
+  loading:boolean=true;
   SuggestionList:IsuggestedUser[]=[];
   subscription=new Subscription();
   ngOnInit(): void {
@@ -22,6 +24,7 @@ export class SuggestionsComponent {
     
   }
   getFollowSuggestionsByPageData(search:string):void{
+      this.loading=true;
       if (this.inputValue!==search) {
         this.nextPageNumber=1;
         this.SuggestionList=[];
@@ -33,10 +36,10 @@ export class SuggestionsComponent {
 
         next:(res)=>{
         this.SuggestionList=[...this.SuggestionList,...res.data.suggestions];
+        this.loading=false;
       },
-      error:(err)=>{
-        console.log(err);
-        
+      error:()=>{
+        this.loading=false;
       }
       })
 

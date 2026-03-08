@@ -4,4 +4,7 @@
     <app-single-post (callParentFunction)="returnToFeed()" [post]="post" ></app-single-post>
 
 }
+@else {
+    <app-loading [loadingType]="'single post'"></app-loading>
+}
 </div>

@@ -1,24 +1,25 @@
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
-import { initFlowbite } from 'flowbite';
-import { PostsService } from '../../../../core/services/posts.service';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { formatDate } from '@angular/common';
-import { Dropdown } from 'flowbite';
-import { CommentComponent } from "./comment/comment.component";
-import { SinglePostComponent } from "../../../../shared/ui/single-post/single-post.component";
+import { ActivatedRoute } from '@angular/router';
+import { PostsService } from '../../../../core/services/posts.service';
 import { UserDataService } from '../../../../core/services/user-data.service';
-
+import { UserService } from '../../../../core/services/user.service';
+import { LoadingComponent } from "../../../../shared/ui/loading/loading.component";
+import { SinglePostComponent } from "../../../../shared/ui/single-post/single-post.component";
 @Component({
   selector: 'app-posts-area',
-  imports: [ReactiveFormsModule, SinglePostComponent],
+  imports: [ReactiveFormsModule, SinglePostComponent, LoadingComponent],
   templateUrl: './posts-area.component.html',
   styleUrl: './posts-area.component.css',
 })
 export class PostsAreaComponent implements OnInit {
-  private readonly postsService = inject(PostsService)
-  readonly userDataService = inject(UserDataService)
+  private readonly postsService = inject(PostsService);
+  readonly userDataService = inject(UserDataService);
+  readonly userService = inject(UserService);
+  readonly activatedRoute = inject(ActivatedRoute);
+  tab:string='feed';   // 'feed'|'myPosts'|'community'|'saved'
   postsList: Ipost[] = [];
-
+  loading:boolean=true;
   imgFile!:File|null;
   imgUrl: string | ArrayBuffer | null | undefined='';
 
@@ -26,20 +27,98 @@ export class PostsAreaComponent implements OnInit {
   privacy:FormControl=new FormControl('public');
 
    ngOnInit(): void {
-    this.getAllPostsData();
+    this.activatedRoute.queryParamMap.subscribe(
+      query=>{
+        this.tab=query.get('tab')|| 'feed' ;
+        this.getPosts(this.tab);
+      }
+    )
   }
 
-
-  getAllPostsData(): void {
-    this.postsService.getAllPosts().subscribe({
+  getPosts(tab:string):void{
+    switch (tab) {
+      case 'feed':
+        this.getFeedPostsData()
+        break;
+      case 'myPosts':
+        this.getFeedMyPostsData()
+        break;
+      case 'community':
+        this.getFeedCommunityPostsData()
+        break;
+      case 'saved':
+        this.getbookmarksData()
+        break;
+    
+      default:
+        break;
+    }
+  }
+  getFeedPostsData(): void {
+    this.loading=true;
+    this.postsService.getFeedPosts().subscribe({
       next: (res) => {
+        if(this.tab==='feed'){
+          this.loading=false;
         this.postsList = res.data.posts;
+        }
 
+      },
+      error: () => {
+        this.loading=false;
       },
       
     })
 
   }
+  getFeedMyPostsData(): void {
+    this.loading=true;
+    this.postsService.getFeedMyPosts().subscribe({
+      next: (res) => {
+        if(this.tab==='myPosts'){
+          this.loading=false;
+        this.postsList = res.data.posts;
+        }
+      },
+      error: () => {
+        this.loading=false;
+      },
+    })
+  }
+  getFeedCommunityPostsData(): void {
+    this.loading=true;
+    this.postsService.getFeedCommunityPosts().subscribe({
+      next: (res) => {
+        if(this.tab==='community'){
+          this.loading=false;
+        this.postsList = res.data.posts;
+        }
+      },
+      error: () => {
+        this.loading=false;
+      },
+    })
+  }
+  getbookmarksData(): void {
+    this.loading=true;
+    this.userService.getbookmarks().subscribe({
+      next: (res) => {
+        if(this.tab==='saved'){
+          this.loading=false;
+          
+        this.postsList = res.data.bookmarks;
+        }
+      },
+      error: () => {
+        this.loading=false;
+      },
+    })
+  }
+
+
+
+
+
     submitForm(e:Event):void{
     e.preventDefault();
 
@@ -72,7 +151,7 @@ export class PostsAreaComponent implements OnInit {
         // reset Inputs
         this.content.reset('');
         this.imgUrl='';
-        this.getAllPostsData();
+        this.getFeedPostsData();
         
        }
       },
@@ -100,5 +179,7 @@ export class PostsAreaComponent implements OnInit {
      closeImg():void{
     this.imgUrl='';
   }
+
+
   
 }

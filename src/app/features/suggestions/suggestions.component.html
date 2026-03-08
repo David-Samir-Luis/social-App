@@ -2,7 +2,7 @@
   <main class="min-w-0">
     <div class="mx-auto max-w-4xl space-y-4">
       <button routerLink="/feed"
-        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
+        class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -52,12 +52,19 @@
         <app-search-friends-input (suggestedList)="getFollowSuggestionsByPageData($event)"></app-search-friends-input>
       
         <div class="grid gap-3 sm:grid-cols-2">
-        @for (user of SuggestionList; track user._id) {
+      @if (loading) {
+        @for (item of [1,2,3,4,5,6,7,8]; track $index) {
+          <app-loading [loadingType]="'suggested user'"></app-loading>
+        }
+      }
+      @else {
+          @for (user of SuggestionList; track user._id) {
         <app-sugested-user (functionCall)="callBackforFollowUser($event)" [user]="user" ></app-sugested-user>
         }
         @empty {
           <p class="text-sm text-slate-500">No users matched your search.</p>
         }
+      }
       </div>
         @if (SuggestionList.length) {
           <button (click)="getFollowSuggestionsByPageData(inputValue)"

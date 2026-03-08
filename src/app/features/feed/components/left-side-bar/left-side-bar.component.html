@@ -2,7 +2,7 @@
       class="w-full text-sm sticky top-21 bg-white rounded-[20px] shadow-sm border border-slate-50 p-2.5 flex flex-col gap-1"
       aria-label="Sidebar Navigation"
     >
-      <button  (click)="setActive('feed')"
+      <button  [routerLink]="[]" [queryParams]="{tab:'feed'}"  
       [class]='activeBtn==="feed"?  "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
         class="flex items-center gap-4 p-2 cursor-pointer rounded-xl font-semibold transition-colors duration-200 "
       >
@@ -10,8 +10,8 @@
         <span class="">Feed</span>
       </button>
 
-      <button  (click)="setActive('posts')"
-      [class]='activeBtn ==="posts"? "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
+      <button [routerLink]="[]" [queryParams]="{tab:'myPosts'}" 
+      [class]='activeBtn ==="myPosts"? "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
         class="flex items-center gap-4 p-2 cursor-pointer rounded-xl font-semibold transition-colors duration-200 "
       >
         <i
@@ -20,8 +20,8 @@
         <span class="">My Posts</span>
       </button>
 
-      <button  (click)="setActive('Community')"
-      [class]='activeBtn==="Community"?  "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
+      <button [routerLink]="[]" [queryParams]="{tab:'community'}" 
+      [class]='activeBtn==="community"?  "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
         class="flex items-center gap-4 p-2 cursor-pointer rounded-xl font-semibold transition-colors duration-200 "
       >
         <i
@@ -30,8 +30,8 @@
         <span class="">Community</span>
       </button>
 
-      <button  (click)="setActive('Saved')"
-      [class]='activeBtn==="Saved" ? "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
+      <button  [routerLink]="[]" [queryParams]="{tab:'saved'}" 
+      [class]='activeBtn==="saved" ? "bg-blue-50 text-blue-600" :"text-slate-700 hover:bg-slate-50 group"'
         class="flex items-center gap-4 p-2 cursor-pointer rounded-xl font-semibold transition-colors duration-200 "
       >
         <i

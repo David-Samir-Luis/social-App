@@ -61,7 +61,7 @@
       <div class="hidden md:grid md:grid-cols-3 gap-4 pt-8">
 
         <!-- Feed -->
-        <a routerLink="/feed" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
+        <a routerLink="/feed" [queryParams]="{tab:'feed'}" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
           <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
            <i class="fa-solid fa-house"></i>
           </div>
@@ -70,7 +70,7 @@
         </a>
 
         <!-- Community -->
-        <a routerLink="/feed"  class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
+        <a routerLink="/feed" [queryParams]="{tab:'community'}"   class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
           <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
            <i class="fa-solid fa-users"></i>
           </div>
@@ -79,7 +79,7 @@
         </a>
 
         <!-- Saved -->
-        <a routerLink="/feed" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
+        <a routerLink="/feed" [queryParams]="{tab:'saved'}" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
           <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
            <i class="fa-regular fa-bookmark"></i>
           </div>
