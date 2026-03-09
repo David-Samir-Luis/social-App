@@ -54,7 +54,7 @@
             [id]="`dropdownMenuIconButton${post._id}`"
             [attr.data-dropdown-toggle]="'dropdownDots' + post._id"
             data-dropdown-placement="bottom-start"
-            class="text-heading bg-neutral-primary box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
+            class="text-heading cursor-pointer bg-neutral-primary box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
             type="button"
           >
             <i class="fa-solid fa-ellipsis"></i>
@@ -72,26 +72,33 @@
                 [attr.aria-labelledby]="`dropdownMenuIconButton${post._id}`"
               >
                 <li>
+                    <button
+                      (click)="copyPostLink(post._id)"
+                      class="inline-flex cursor-pointer items-baseline w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                    >
+                      <i class="fa-solid fa-copy me-1"></i> Copy link
+                    </button>
                   <button
                     (click)="savePost(post)"
-                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                    class="inline-flex cursor-pointer items-baseline w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                   >
-                    {{ post.bookmarked === false ? 'Save Post' : 'Unsave Post' }}
+                    <i class="fa-regular fa-bookmark me-1"></i>{{ post.bookmarked === false ? 'Save Post' : 'Unsave Post' }}
                   </button>
                   @if (loginedUserId === post.user._id) {
                     <button
                       (click)="editPostData(post)"
-                      class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                      class="inline-flex cursor-pointer items-baseline w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                     >
-                      Edit post
+                      <i class="fa-solid fa-pencil me-1"></i> Edit post
                     </button>
 
                     <button
                       (click)="deletePostItem(post._id)"
-                      class="inline-flex text-red-700 items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                      class="inline-flex cursor-pointer text-red-700 items-baseline w-full p-2 hover:bg-rose-50 rounded"
                     >
-                      Delete post
+                      <i class="fa-solid fa-trash-can me-1"></i> Delete post
                     </button>
+                  
                   }
                 </li>
               </ul>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from "@angular/router";
 import { FormInputComponent } from "../../shared/ui/form-input/form-input.component";
 import { ChangePasswordService } from './change-password.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-change-password',
@@ -13,6 +14,7 @@ import { ChangePasswordService } from './change-password.service';
 export class ChangePasswordComponent {
   private readonly fb= inject(FormBuilder);
   private readonly router= inject(Router);
+  private readonly toastr= inject(ToastrService);
   private readonly changePasswordService= inject(ChangePasswordService);
   loading:boolean=false;
   errorMessage:string='';
@@ -50,10 +52,11 @@ export class ChangePasswordComponent {
         this.loading=true;
       this.changePasswordService.changePassword(body).subscribe({
         next:(res:any)=>{
-          this.loading=false;
-          // this.errorMessage='';
+        this.loading=false;
         localStorage.setItem('socialToken',res.data.token);
-        this.router.navigate(['/feed'],{queryParams:{tab:'feed'}})
+        this.router.navigate(['/feed'],{queryParams:{tab:'feed'}});
+        this.toastr.success(res.message)
+        
         },
         error:(err)=> {
           this.loading=false;

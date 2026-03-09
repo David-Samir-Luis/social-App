@@ -1,6 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { SharePostService } from './share-post.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-share-post',
@@ -9,7 +10,8 @@ import { SharePostService } from './share-post.service';
   styleUrl: './share-post.component.css',
 })
 export class SharePostComponent {
-  private readonly sharePostService=inject(SharePostService)
+  private readonly sharePostService=inject(SharePostService);
+  private readonly toastr = inject(ToastrService);
   @Input({required:true}) post!:Ipost;
   cancelFlag:boolean=false;
   content=new FormControl('');
@@ -17,13 +19,14 @@ export class SharePostComponent {
     this.cancelFlag=true;
   }
   submit(postId:string):void{
-    const obj:object={"body": this.content.value }
+    const obj:object={"body": this.content.value|| ' ' }
     this.sharePostService.sharePost(postId,obj).subscribe({
       next:res=>{
-        console.log(res);
+        this.toastr.success(res.message);
         this.cancelFlag=true;
       },
-      error:()=>{
+      error:(err)=>{
+        this.toastr.info(err.error.message);
         this.cancelFlag=true;
       }
     })

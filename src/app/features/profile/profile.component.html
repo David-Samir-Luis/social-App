@@ -32,10 +32,10 @@
               class="pointer-events-none absolute right-2 top-2 z-10 flex max-w-[90%] flex-wrap items-center justify-end gap-1.5 opacity-100 transition duration-200 sm:right-3 sm:top-3 sm:max-w-none sm:gap-2 sm:opacity-0 sm:group-hover/cover:opacity-100 sm:group-focus-within/cover:opacity-100"
             >
               @if (myProfile.cover) {
-                <button
+                <button 
                   (click)="viewImage('cover')"
                   type="button"
-                  class="pointer-events-auto inline-flex items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+                  class="pointer-events-auto cursor-pointer inline-flex items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -61,9 +61,11 @@
                   >View cover
                 </button>
               }
+              
               <label
                 class="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
-                ><svg
+                >
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="13"
                   height="13"
@@ -87,7 +89,7 @@
                 <button
                   (click)="removeCover()"
                   type="button"
-                  class="pointer-events-auto inline-flex items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 disabled:cursor-not-allowed disabled:opacity-60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+                  class="pointer-events-auto cursor-pointer inline-flex items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 disabled:cursor-not-allowed disabled:opacity-60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +115,7 @@
             </div>
           </div>
           <div class="relative -mt-12 px-3 pb-5 sm:-mt-16 sm:px-8 sm:pb-6">
-            <div class="rounded-3xl border border-white/60 bg-white/92 p-5 backdrop-blur-xl sm:p-7">
+            <div class="rounded-3xl border border-white/60 bg-white p-5 backdrop-blur-xl sm:p-7">
               <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div class="min-w-0">
                   <div class="flex items-end gap-4">
@@ -248,6 +250,131 @@
                   </div>
                 </div>
               </div>
+              <div class="ssssssssss">
+<!-- stats bar -->
+<div class="flex flex-wrap gap-2 md:px-7 border-t border-[#e4e7ed]  mt-4.5  py-4.5">
+
+  <!-- Followers -->
+  <a
+    
+    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
+           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
+           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
+           hover:-translate-y-0.5 hover:shadow-sm"
+  >
+    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#dbeafe] text-[#2563eb]">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
+        <circle cx="8" cy="5" r="2.5"/>
+        <path d="M2 13c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+      </svg>
+    </div>
+
+    <div class="flex flex-col gap-px">
+      <span class="text-[19px] font-bold tracking-tight"> {{ myProfile.followersCount }}</span>
+      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
+        Followers
+      </span>
+    </div>
+  </a>
+
+
+  <!-- Following -->
+  <a
+    
+    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
+           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
+           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
+           hover:-translate-y-0.5 hover:shadow-sm"
+  >
+    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#ede9fe] text-[#7c3aed]">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
+        <circle cx="5.5" cy="5" r="2.5"/>
+        <circle cx="10.5" cy="5" r="2.5"/>
+        <path d="M1 13c0-3 2-5 4.5-5M15 13c0-3-2-5-4.5-5M8 13c0-2.5 1.5-4.5 4-4.5"/>
+      </svg>
+    </div>
+
+    <div class="flex flex-col gap-px">
+      <span class="text-[19px] font-bold tracking-tight"> {{ myProfile.followingCount }}</span>
+      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
+        Following
+      </span>
+    </div>
+  </a>
+
+
+  <!-- Bookmarks -->
+  <a
+    
+    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
+           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
+           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
+           hover:-translate-y-0.5 hover:shadow-sm"
+  >
+    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#fef3c7] text-[#d97706]">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
+        <path d="M3 2h10a1 1 0 011 1v10l-4-2.5L6 13V3a1 1 0 011-1z"/>
+      </svg>
+    </div>
+
+    <div class="flex flex-col gap-px">
+      <span class="text-[19px] font-bold tracking-tight">{{ myProfile.bookmarksCount===0? myProfile.bookmarksCount:myProfile.bookmarksCount- 1 }}</span>
+      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
+        Bookmarks
+      </span>
+    </div>
+  </a>
+
+
+  <!-- Posts -->
+  <a
+    
+    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
+           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
+           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
+           hover:-translate-y-0.5 hover:shadow-sm"
+  >
+    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#ecfdf5] text-[#10b981]">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
+        <rect x="2" y="3" width="12" height="10" rx="1.5"/>
+        <path d="M5 7h6M5 10h4"/>
+      </svg>
+    </div>
+
+    <div class="flex flex-col gap-px">
+      <span class="text-[19px] font-bold tracking-tight">{{ postsCount }}</span>
+      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
+        My posts
+      </span>
+    </div>
+  </a>
+
+
+  <!-- Saved -->
+  <a
+    
+    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
+           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
+           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
+           hover:-translate-y-0.5 hover:shadow-sm"
+  >
+    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#ffe4e6] text-[#e11d48]">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
+        <path d="M8 13.5S2 9.5 2 5.5a3.5 3.5 0 016-2.45A3.5 3.5 0 0114 5.5c0 4-6 8-6 8z"/>
+      </svg>
+    </div>
+
+    <div class="flex flex-col gap-px">
+      <span class="text-[19px] font-bold tracking-tight">{{ myProfile.bookmarksCount }}</span>
+      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
+        Saved posts
+      </span>
+    </div>
+  </a>
+
+</div>
+              </div>
+              
               <div class="mt-5 grid gap-4 lg:grid-cols-[1.3fr_.7fr]">
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <h3 class="text-sm font-extrabold text-slate-800">About</h3>

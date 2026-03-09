@@ -8,6 +8,7 @@ import { RouterLink } from "@angular/router";
 import { SharePostComponent } from "../../../features/feed/components/share-post/share-post.component";
 import { CommentComponent } from "./components/comment/comment.component";
 import { PostingSharedComponent } from "./components/posting-shared/posting-shared.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-single-post',
@@ -24,6 +25,7 @@ export class SinglePostComponent implements AfterViewInit{
     showCommentsFlag:boolean=false;
     loginedUserId: string = JSON.parse(localStorage.getItem('socialUser')!)?._id;
     private readonly postsService = inject(PostsService);
+    private readonly tastr = inject(ToastrService);
    
     editContent:FormControl=new FormControl('');
     editPrivacy:FormControl=new FormControl('');
@@ -107,6 +109,18 @@ export class SinglePostComponent implements AfterViewInit{
         },
       })
     }
+  copyPostLink(postId: string) {
+  const url = `${window.location.origin}/#/details/${postId}`;
+  navigator.clipboard.writeText(url).then(() => {
+    this.tastr.success('Link copied');
+  }).catch(err => {
+    console.error('Failed to copy', err);
+    this.tastr.success('Failed to copy');
+  });
+
+  this.closeDropdown(postId);
+
+}
   
 
 }
