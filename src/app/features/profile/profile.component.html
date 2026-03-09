@@ -243,7 +243,7 @@
                       Bookmarks
                     </p>
                     <p class="mt-1 text-2xl font-black text-slate-900 sm:text-3xl">
-                      {{ myProfile.bookmarksCount - 1 }}
+                      {{ myProfile.bookmarksCount===0? myProfile.bookmarksCount:myProfile.bookmarksCount- 1 }}
                     </p>
                   </div>
                 </div>
@@ -390,7 +390,7 @@
         </div>
       </section>
       @if (openCoverPrivacy) {
-        <div class="fixed inset-0 z-[90] flex items-center justify-center bg-black/60 p-4">
+        <div class="fixed inset-0 z-90 flex items-center justify-center bg-black/60 p-4">
           <div class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-xl">
             <h3 class="text-lg font-extrabold text-slate-900">Cover post privacy</h3>
             <p class="mt-1 text-sm text-slate-500">
@@ -425,7 +425,7 @@
       }
 
       @if (viewImageFlag) {
-        <div class="fixed inset-0 z-[80] flex items-center justify-center bg-black/90 p-4 sm:p-8">
+        <div class="fixed inset-0 z-80 flex items-center justify-center bg-black/90 p-4 sm:p-8">
           <button
             (click)="cancelImageInFullScreen()"
             type="button"
@@ -455,9 +455,9 @@
         </div>
       }
       @if (openPhotoPrivacy){
-        <div class="fixed inset-0 z-[90] flex items-center justify-center bg-black/70 p-4">
+        <div class="fixed inset-0 z-90 flex items-center justify-center bg-black/70 p-4">
           <div
-            class="w-full max-w-[560px] rounded-2xl border border-slate-200 bg-white p-4 shadow-xl sm:p-5"
+            class="w-full max-w-140 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl sm:p-5"
           >
             <div class="mb-3">
               <h3 class="text-lg font-extrabold text-slate-900">Adjust profile photo</h3>
@@ -465,9 +465,9 @@
                 Drag to reposition and use zoom for perfect framing.
               </p>
             </div>
-            <div class="mx-auto w-full max-w-[340px] overflow-x-auto pb-1">
+            <div class="mx-auto w-full max-w-85 overflow-x-auto pb-1">
               <div
-                class="relative h-[320px] w-[320px] touch-none overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200"
+                class="relative h-80 w-[320px] touch-none overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200"
               >
                 <img
                   alt="Crop preview"

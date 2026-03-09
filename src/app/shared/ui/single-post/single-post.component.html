@@ -12,7 +12,7 @@
               class="text-[15px] font-bold text-slate-900 leading-tight hover:underline cursor-pointer"
               >{{ post.user.name }}</span
             >
-            <div class="flex items-center text-[13px] text-slate-500 mt-0.5 gap-1">
+            <div class="flex items-center text-[13px] text-slate-500 gap-1">
               <span class="hover:underline cursor-pointer">@{{ post.user.username }}</span>
               <span>&middot;</span>
               <span class="hover:underline cursor-pointer">{{ post.createdAt| timeAgo|async}}</span>
@@ -159,6 +159,9 @@
             alt="post image"
           />
         }
+        @if (post.sharedPost) {
+          <app-posting-shared [sharedPost]="post.sharedPost"></app-posting-shared>
+        }
       </div>
 
       <!-- like share comments  counts & view details -->
@@ -197,7 +200,7 @@
           <i class="fa-regular fa-message text-lg"></i>
           Comment
         </button>
-        <button
+        <button #showShareModal
           class="flex-1 flex cursor-pointer items-center justify-center gap-2 text-slate-600 font-semibold text-[14px] hover:bg-slate-50 py-2 rounded-md transition-colors"
         >
           <i class="fa-solid fa-share text-lg"></i>
@@ -206,9 +209,15 @@
       </div>
 
       <!-- <hr class="border-t border-slate-200 mt-1 mb-4" /> -->
-      
-         @defer (on interaction(showComments)) {
+        
+        @defer (on interaction(showComments)) {
         <app-comment [showCommentsFlag]="showCommentsFlag" [postId]="post._id"></app-comment>
-       }
+      }
+        @defer (on interaction(showShareModal)) {
+        <app-share-post [post]="post"></app-share-post>
+      }
+
+
+
       
     </div>

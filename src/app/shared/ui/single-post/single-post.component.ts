@@ -2,14 +2,16 @@ import { PostsService } from './../../../core/services/posts.service';
 import { AfterViewInit, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Dropdown, initFlowbite } from 'flowbite';
-import { CommentComponent } from "../../../features/feed/components/posts-area/comment/comment.component";
 import { TimeAgoPipe } from '../../pipes/time-ago-pipe';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from "@angular/router";
+import { SharePostComponent } from "../../../features/feed/components/share-post/share-post.component";
+import { CommentComponent } from "./components/comment/comment.component";
+import { PostingSharedComponent } from "./components/posting-shared/posting-shared.component";
 
 @Component({
   selector: 'app-single-post',
-  imports: [CommentComponent, ReactiveFormsModule, TimeAgoPipe, AsyncPipe, RouterLink],
+  imports: [ReactiveFormsModule, TimeAgoPipe, AsyncPipe, RouterLink, SharePostComponent, CommentComponent, PostingSharedComponent],
   templateUrl: './single-post.component.html',
   styleUrl: './single-post.component.css',
 })

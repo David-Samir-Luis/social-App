@@ -1,0 +1,26 @@
+      <div>
+        <div class="relative">
+          <input 
+            [formControlName]="ControlName"
+            [type]="type==='password'? changeType:type"
+            [id]="id"
+            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-heading bg-transparent rounded-base border border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+            [class]="{
+              'border-rose-300':control.invalid && control.touched,
+              'focus:border-rose-400':control.invalid && control.touched
+            }"
+            placeholder=" "
+          />
+          <label
+            [for]="id"
+            class="absolute text-sm text-body duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-neutral-primary px-2 peer-focus:px-2 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1"
+            >{{labelText}}</label
+          >
+          @if (type==='password') {
+             <span (click)="toggleShowPassword()" class="absolute top-1/2 -translate-y-1/2 inset-e-4 cursor-pointer">
+          <i [class]="changeType==='text'?'fa-eye':'fa-eye-slash'" class="fa-regular hover:text-mainColor"></i>
+        </span>
+          }
+        </div>
+        <ng-content></ng-content>
+      </div>
