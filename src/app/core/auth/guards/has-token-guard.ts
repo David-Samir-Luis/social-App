@@ -11,3 +11,5 @@ export const hasTokenGuard: CanActivateFn = (route, state) => {
     return router.parseUrl('/login')
   }
 };
+
+

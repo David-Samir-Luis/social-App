@@ -2,10 +2,11 @@ import { Component, inject, Input } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { SharePostService } from './share-post.service';
 import { ToastrService } from 'ngx-toastr';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-share-post',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './share-post.component.html',
   styleUrl: './share-post.component.css',
 })

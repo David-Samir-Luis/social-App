@@ -1,1 +1,76 @@
-<p>notification works!</p>
+<div class="mx-auto max-w-7xl px-3 py-3.5">
+  <main class="min-w-0">
+    <section class="rounded-xl border border-slate-200 bg-white shadow-sm sm:rounded-2xl">
+      <div class="border-b border-slate-200 p-4 sm:p-5">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-black text-slate-900 sm:text-2xl">Notifications</h2>
+            <p class="mt-1 text-sm text-slate-500">
+              Realtime updates for likes, comments, shares, and follows.
+            </p>
+          </div>
+          <button (click)="markAllNotificationsAsReadItem()"
+            class="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-check-check"
+              aria-hidden="true"
+            >
+              <path d="M18 6 7 17l-5-5"></path>
+              <path d="m22 10-7.5 7.5L13 16"></path></svg
+            >Mark all as read
+          </button>
+        </div>
+        <div class="mt-4 grid grid-cols-2 gap-2 sm:flex sm:items-center">
+          <button (click)="showNotifications('all')"
+            type="button"
+            class="rounded-full cursor-pointer px-4 py-1.5 text-sm font-bold transition"
+            [class]="activeTab==='all'?'bg-[#1877f2] text-white':' bg-slate-100 text-slate-700 hover:bg-slate-200'"
+          >
+            All</button
+          ><button (click)="showNotifications('unread')"
+            type="button"
+            class="inline-flex cursor-pointer items-center gap-2 rounded-full px-4 py-1.5 text-sm font-bold transition"
+            [class]="activeTab==='unread'?'bg-[#1877f2] text-white':'bg-slate-100 text-slate-700 hover:bg-slate-200'"
+          >
+            Unread
+            @if (unreadNotificationsCountService.updatedUnreadCount>0) {
+              <span class="rounded-full px-2 py-0.5 text-xs bg-white text-[#1877f2]"
+                    [class]="activeTab==='unread'?' bg-white/25 text-white':'bg-white text-[#1877f2]'"
+              >{{unreadNotificationsCountService.updatedUnreadCount}}</span>
+            }
+          </button>
+        </div>
+      </div>
+      <div class="grid gap-2 p-3 sm:p-4">
+        @if (loading) {
+           @for (item of [1,2,3,4]; track $index) {
+    <app-loading [loadingType]="'suggested user'"></app-loading>
+        } 
+      }
+        @else {
+
+            @for (item of filteredList; track item._id) {
+              <app-notification-item [notification]="item"></app-notification-item>
+            }
+           @empty {
+            <div class="space-y-2 p-3 sm:p-4">
+              <div class="rounded-xl border border-slate-200 bg-slate-50 p-8 text-center">
+                <p class="text-sm font-semibold text-slate-500">No{{activeTab==='unread'?' unread':''}} notifications yet.</p>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </section>
+  </main>
+</div>

@@ -2,13 +2,13 @@
       <!-- user details  -->
       <div class="flex items-start justify-between mb-3">
         <div class="flex items-center gap-3">
-          <img
+          <img [routerLink]="['/profile',post.user._id]"
             [src]="post.user.photo"
             [alt]="post.user.name"
-            class="size-10 rounded-full object-cover shrink-0 bg-slate-100 border border-slate-50"
+            class="size-10 rounded-full cursor-pointer object-cover shrink-0 bg-slate-100 border border-slate-50"
           />
           <div>
-            <span
+            <span [routerLink]="['/profile',post.user._id]"
               class="text-[15px] font-bold text-slate-900 leading-tight hover:underline cursor-pointer"
               >{{ post.user.name }}</span
             >

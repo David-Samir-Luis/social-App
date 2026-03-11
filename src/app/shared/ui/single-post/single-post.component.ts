@@ -106,6 +106,7 @@ export class SinglePostComponent implements AfterViewInit{
       this.postsService.likeOnPost(post._id).subscribe({
         next:(res)=>{
           post.likes=res.data.post.likes;
+          post.likesCount=post.likes.length
         },
       })
     }

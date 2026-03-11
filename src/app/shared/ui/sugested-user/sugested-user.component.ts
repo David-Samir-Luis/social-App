@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { UserService } from '../../../core/services/user.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-sugested-user',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './sugested-user.component.html',
   styleUrl: './sugested-user.component.css',
 })

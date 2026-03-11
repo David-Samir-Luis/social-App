@@ -6,9 +6,11 @@ import { Dropdown } from 'flowbite';
 import { UserDataService } from '../../../../../core/services/user-data.service';
 import { TimeAgoPipe } from '../../../../../shared/pipes/time-ago-pipe';
 import { AsyncPipe } from '@angular/common';
+import { RouterLink } from "@angular/router";
+import { LoadingComponent } from "../../../loading/loading.component";
 @Component({
   selector: 'app-comment',
-  imports: [ReactiveFormsModule, TimeAgoPipe,AsyncPipe],
+  imports: [ReactiveFormsModule, TimeAgoPipe, AsyncPipe, RouterLink, LoadingComponent],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css',
 })
@@ -22,6 +24,7 @@ export class CommentComponent implements OnInit ,AfterViewInit{
   content:FormControl=new FormControl('',Validators.minLength(2));
   editContent:FormControl=new FormControl('',Validators.minLength(2));
   isEdit:boolean=false;
+  isLoading:boolean=true;
   commentToEditId:string='';
  @Input({required:true}) postId!:string;
 
@@ -44,10 +47,14 @@ export class CommentComponent implements OnInit ,AfterViewInit{
     this.imgUrl='';
   }
   GetPostCommentsData():void{
+  this.isLoading=true;
     this.commentService.getPostComments(this.postId).subscribe(
       {
         next:(res)=>{
           this.commentsList=res.data.comments;
+          this.commentsList.sort((a,b)=>b.likes.length-a.likes.length);
+          this.isLoading=false;
+
         },
         complete:()=>{
           setTimeout(() => initFlowbite(), 0);
@@ -178,5 +185,15 @@ likeComment(comment:Icomment):void{
       },
 
     })
+  }
+
+  sortComments(e:Event){
+     const value=(e.target as HTMLSelectElement).value;
+     if(value==='relevant')
+     {
+      this.commentsList.sort((a,b)=>b.likes.length-a.likes.length);
+     }else{
+      this.commentsList.sort((a,b)=>new Date(b.createdAt).getTime()-new Date(a.createdAt).getTime())
+     }
   }
 }

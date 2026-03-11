@@ -4,16 +4,18 @@ import { Router, RouterLink } from "@angular/router";
 import { FormInputComponent } from "../../shared/ui/form-input/form-input.component";
 import { ChangePasswordService } from './change-password.service';
 import { ToastrService } from 'ngx-toastr';
+import { NavService } from '../../core/uitilites/nav.service';
 
 @Component({
   selector: 'app-change-password',
-  imports: [ReactiveFormsModule, RouterLink, FormInputComponent],
+  imports: [ReactiveFormsModule, FormInputComponent],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.css',
 })
 export class ChangePasswordComponent {
   private readonly fb= inject(FormBuilder);
   private readonly router= inject(Router);
+  readonly navService= inject(NavService);
   private readonly toastr= inject(ToastrService);
   private readonly changePasswordService= inject(ChangePasswordService);
   loading:boolean=false;

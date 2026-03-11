@@ -3,63 +3,89 @@ import { UserService } from '../../core/services/user.service';
 import { SinglePostComponent } from "../../shared/ui/single-post/single-post.component";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserDataService } from '../../core/services/user-data.service';
+import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { LoadingComponent } from "../../shared/ui/loading/loading.component";
+import { NavService } from '../../core/uitilites/nav.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [SinglePostComponent,ReactiveFormsModule],
+  imports: [SinglePostComponent, ReactiveFormsModule, DatePipe, LoadingComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent  implements OnInit{
 
   private readonly userService=inject(UserService);
+  private readonly activatedRoute=inject(ActivatedRoute);
   private readonly userDataService=inject(UserDataService);
-  myProfile!:ImyProfile;
+   readonly navService=inject(NavService);
+  profile!:IuserProfile|ImyProfile;
+  isFollowing:boolean=false;
   coverAndPhotoFile!:File|null;
   coverPrivacy:FormControl=new FormControl('public');
   photoPrivacy:FormControl=new FormControl('public');
   postsCount:number=0;
+  postsLoading:boolean=true;
+  followLoading:boolean=false;
   openCoverPrivacy=false;
   openPhotoPrivacy=false;
   profileUrl: string | ArrayBuffer | null | undefined=''
   viewImageFlag:string='';
   activeTab:'myposts'|'saved'='myposts'
   PostsList:Ipost[]=[];
+  myId:string=JSON.parse(localStorage.getItem('socialUser')!)._id;
 
   ngOnInit(): void {
-    this.getMyProfileData();
-    this.getMyPostsData();
+    this.activatedRoute.paramMap.subscribe(
+      params=>{
+       const userId:string=  params.get('id')!;
+       if (userId===this.myId) {
+         this.getMyProfileData();
+         this.getMyPostsData();
+         this.getUserProfileData(userId);
+        this.getUserPostsData(userId)
+       }else{
+        this.getUserProfileData(userId);
+        this.getUserPostsData(userId)
+       }
+        
+      }
+    )
+   
   }
 
   getMyProfileData():void{
     this.userService.getMyProfile().subscribe({
       next:(res)=>{
-        this.myProfile=res.data.user;
-        this.userDataService.profilePhotoUrl=this.myProfile.photo;
+        this.profile=res.data.user;
+        this.userDataService.profilePhotoUrl=this.profile.photo;
       },
     })
   }
 
   getMyPostsData():void{
-    const userId:string=JSON.parse(localStorage.getItem('socialUser')!)?._id;
-    
-    this.userService.getUserPosts(userId).subscribe({
+    this.postsLoading=true;
+    this.userService.getUserPosts(this.myId).subscribe({
       next:(res)=>{
         this.PostsList=res.data.posts;
         this.postsCount=this.PostsList.length;
-    this.activeTab='myposts'
+        this.activeTab='myposts';
+        this.postsLoading=false;
+
         
       },
     })
   }
   getbookmarksData():void{
+    this.postsLoading=true;
     this.userService.getbookmarks().subscribe({
       next:(res)=>{
         this.PostsList=res.data.bookmarks;
         console.log(this.PostsList.length);
         
         this.activeTab='saved'
-        
+        this.postsLoading=false;
       },
     
     })
@@ -157,7 +183,7 @@ export class ProfileComponent  implements OnInit{
       }
     }
     removeCover(){
-      this.myProfile.cover='';
+      this.profile.cover='';
       this.userService.removeCoverPhoto().subscribe();
     }
 
@@ -169,4 +195,37 @@ cancelImageInFullScreen():void{
    this.viewImageFlag='';
 }
 
+getUserProfileData(userId: string){
+  this.userService.getUserProfile(userId).subscribe(
+    res=>{
+      this.profile=res.data.user;
+      this.isFollowing=res.data.isFollowing;
+    }
+  )
+}
+getUserPostsData(userId: string){
+  this.postsLoading=true;
+  this.userService.getUserPosts(userId).subscribe(
+    res=>{
+      this.PostsList=res.data.posts;
+      this.postsCount=this.PostsList.length;
+      this.postsLoading=false;
+    }
+  )
+}
+
+followUnfollowUserItem(userId:string):void{
+  if (!this.followLoading) {
+  this.followLoading=true;
+    this.userService.followUnfollowUser(userId).subscribe({
+      next:()=>{
+        this.followLoading=false;
+        this.isFollowing=!this.isFollowing;         
+      },
+      error:()=>{
+        this.followLoading=false;
+      }
+    })
+  }
+  }
 }

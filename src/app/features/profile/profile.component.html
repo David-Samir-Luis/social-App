@@ -1,16 +1,38 @@
 <div class="mx-auto max-w-7xl px-3 py-3.5">
   <main class="min-w-0">
     <div class="space-y-5 sm:space-y-6">
-      @if (myProfile) {
+     @if (profile&&myId!==profile._id) {
+       <button (click)="navService.goBack()"
+        class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-arrow-left"
+          aria-hidden="true"
+        >
+          <path d="m12 19-7-7 7-7"></path>
+          <path d="M19 12H5"></path></svg
+        >Back
+      </button>
+     }
+      @if (profile) {
         <section
           class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_10px_rgba(15,23,42,.06)] sm:rounded-[28px]"
         >
           <div
             class="group/cover bg-cover bg-center relative h-44 bg-[linear-gradient(112deg,#0f172a_0%,#1e3a5f_36%,#2b5178_72%,#5f8fb8_100%)] sm:h-52 lg:h-60"
             [style]="
-              myProfile.cover
+              profile.cover
                 ? `background-image:linear-gradient(rgba(15, 23, 42, 0.22), rgba(15, 23, 42, 0.4)),
-           url(${myProfile.cover})
+           url(${profile.cover})
           `
                 : ''
             "
@@ -28,11 +50,12 @@
             <div
               class="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/25 to-transparent"
             ></div>
-            <div
+           @if (profile&&myId===profile._id) {
+             <div
               class="pointer-events-none absolute right-2 top-2 z-10 flex max-w-[90%] flex-wrap items-center justify-end gap-1.5 opacity-100 transition duration-200 sm:right-3 sm:top-3 sm:max-w-none sm:gap-2 sm:opacity-0 sm:group-hover/cover:opacity-100 sm:group-focus-within/cover:opacity-100"
             >
-              @if (myProfile.cover) {
-                <button 
+              @if (profile.cover) {
+                <button
                   (click)="viewImage('cover')"
                   type="button"
                   class="pointer-events-auto cursor-pointer inline-flex items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
@@ -61,10 +84,10 @@
                   >View cover
                 </button>
               }
-              
+
               <label
                 class="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
-                >
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="13"
@@ -82,10 +105,14 @@
                     d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"
                   ></path>
                   <circle cx="12" cy="13" r="3"></circle></svg
-                >{{ myProfile.cover ? 'Change cover' : 'Add cover'
-                }}<input (change)="readImg($event,'cover')" accept="image/*" class="hidden" type="file"
+                >{{ profile.cover ? 'Change cover' : 'Add cover'
+                }}<input
+                  (change)="readImg($event, 'cover')"
+                  accept="image/*"
+                  class="hidden"
+                  type="file"
               /></label>
-              @if (myProfile.cover) {
+              @if (profile.cover) {
                 <button
                   (click)="removeCover()"
                   type="button"
@@ -113,18 +140,23 @@
                 </button>
               }
             </div>
+           }
           </div>
           <div class="relative -mt-12 px-3 pb-5 sm:-mt-16 sm:px-8 sm:pb-6">
             <div class="rounded-3xl border border-white/60 bg-white p-5 backdrop-blur-xl sm:p-7">
-              <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                 <div class="min-w-0">
                   <div class="flex items-end gap-4">
                     <div class="group/avatar relative shrink-0">
-                      <button (click)="viewImage('photo')"  type="button" class="cursor-zoom-in rounded-full">
-                        <img 
-                          [alt]="myProfile.name"
+                      <button
+                        (click)="viewImage('photo')"
+                        type="button"
+                        class="cursor-zoom-in rounded-full"
+                      >
+                        <img
+                          [alt]="profile.name"
                           class="h-28 w-28 rounded-full border-4 border-white object-cover shadow-md ring-2 ring-[#dbeafe]"
-                          [src]="myProfile.photo"
+                          [src]="profile.photo"
                         /></button
                       ><button
                         (click)="viewImage('photo')"
@@ -155,7 +187,9 @@
                           <path d="M3 8V3h5"></path>
                           <path d="M9 9 3 3"></path>
                         </svg></button
-                      ><label
+                      >
+                    @if (profile&&myId===profile._id) {
+                       <label
                         class="absolute bottom-1 right-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#1877f2] text-white opacity-100 shadow-sm transition duration-200 hover:bg-[#166fe5] sm:opacity-0 sm:group-hover/avatar:opacity-100 sm:group-focus-within/avatar:opacity-100"
                         ><svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -174,17 +208,23 @@
                             d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"
                           ></path>
                           <circle cx="12" cy="13" r="3"></circle></svg
-                        ><input (change)="readImg($event,'photo')" accept="image/*" class="hidden" type="file" />
+                        ><input
+                          (change)="readImg($event, 'photo')"
+                          accept="image/*"
+                          class="hidden"
+                          type="file"
+                        />
                       </label>
+                    }
                     </div>
                     <div class="min-w-0 pb-1">
                       <h2
                         class="truncate text-2xl font-black tracking-tight text-slate-900 sm:text-4xl"
                       >
-                        {{ myProfile.name }}
+                        {{ profile.name }}
                       </h2>
                       <p class="mt-1 text-lg font-semibold text-slate-500 sm:text-xl">
-                        @{{ myProfile.username }}
+                        @{{ profile.username }}
                       </p>
                       <div
                         class="mt-3 inline-flex items-center gap-2 rounded-full border border-[#d7e7ff] bg-[#eef6ff] px-3 py-1 text-xs font-bold text-[#0b57d0]"
@@ -211,225 +251,183 @@
                     </div>
                   </div>
                 </div>
-                <div class="grid w-full grid-cols-3 gap-2 lg:w-130">
-                  <div
-                    class="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-center sm:px-4 sm:py-4"
+               @if (profile&&myId!==profile._id) {
+                 <button (click)="followUnfollowUserItem(profile._id)"
+                  class="inline-flex cursor-pointer items-center gap-1.75 px-4.5 py-2.25 rounded-[10px] text-[13.5px] font-semibold bg-[#2563eb] text-white shadow-[0_2px_8px_rgba(37,99,235,.25)] transition hover:-translate-y-px hover:bg-[#1d4ed8]"
+                  [disabled]="followLoading"
+                >
+                  @if (followLoading) {
+                    <i class="fa-solid fa-user"></i>
+                    updating...
+                  }@else {
+                   @if (isFollowing) {<i class="fa-solid fa-user-check"></i> following}
+                   @else {<i class="fa-solid fa-user-plus"></i> follow}
+                  }
+                
+                </button>
+               }
+              </div>
+              <div class="">
+                <!-- stats bar -->
+                <div class="flex flex-wrap gap-2 md:px-7 border-t border-[#e4e7ed] mt-7 py-4.5">
+                  <!-- Followers -->
+                  <a
+                    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5 rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed] transition hover:bg-[#eff4ff] hover:border-[#bfcfff] hover:-translate-y-0.5 hover:shadow-sm"
                   >
-                    <p
-                      class="text-[11px] font-bold uppercase tracking-wide text-slate-500 sm:text-xs"
+                    <div
+                      class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#dbeafe] text-[#2563eb]"
                     >
-                      Followers
-                    </p>
-                    <p class="mt-1 text-2xl font-black text-slate-900 sm:text-3xl">
-                      {{ myProfile.followersCount }}
-                    </p>
-                  </div>
-                  <div
-                    class="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-center sm:px-4 sm:py-4"
+                      <svg
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        class="w-4.25 h-4.25"
+                      >
+                        <circle cx="8" cy="5" r="2.5" />
+                        <path d="M2 13c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+                      </svg>
+                    </div>
+
+                    <div class="flex flex-col gap-px">
+                      <span class="text-[19px] font-bold tracking-tight">
+                        {{ profile.followersCount }}</span
+                      >
+                      <span
+                        class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium"
+                      >
+                        Followers
+                      </span>
+                    </div>
+                  </a>
+
+                  <!-- Following -->
+                  <a
+                    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5 rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed] transition hover:bg-[#eff4ff] hover:border-[#bfcfff] hover:-translate-y-0.5 hover:shadow-sm"
                   >
-                    <p
-                      class="text-[11px] font-bold uppercase tracking-wide text-slate-500 sm:text-xs"
+                    <div
+                      class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#ede9fe] text-[#7c3aed]"
                     >
-                      Following
-                    </p>
-                    <p class="mt-1 text-2xl font-black text-slate-900 sm:text-3xl">
-                      {{ myProfile.followingCount }}
-                    </p>
-                  </div>
-                  <div
-                    class="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-center sm:px-4 sm:py-4"
+                      <svg
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        class="w-4.25 h-4.25"
+                      >
+                        <circle cx="5.5" cy="5" r="2.5" />
+                        <circle cx="10.5" cy="5" r="2.5" />
+                        <path
+                          d="M1 13c0-3 2-5 4.5-5M15 13c0-3-2-5-4.5-5M8 13c0-2.5 1.5-4.5 4-4.5"
+                        />
+                      </svg>
+                    </div>
+
+                    <div class="flex flex-col gap-px">
+                      <span class="text-[19px] font-bold tracking-tight">
+                        {{ profile.followingCount }}</span
+                      >
+                      <span
+                        class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium"
+                      >
+                        Following
+                      </span>
+                    </div>
+                  </a>
+
+                @if (profile && profile._id===myId) {
+                    <!-- Saved -->
+                  <a
+                    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5 rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed] transition hover:bg-[#eff4ff] hover:border-[#bfcfff] hover:-translate-y-0.5 hover:shadow-sm"
                   >
-                    <p
-                      class="text-[11px] font-bold uppercase tracking-wide text-slate-500 sm:text-xs"
+                    <div
+                      class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#fef3c7] text-[#d97706]"
                     >
-                      Bookmarks
-                    </p>
-                    <p class="mt-1 text-2xl font-black text-slate-900 sm:text-3xl">
-                      {{ myProfile.bookmarksCount===0? myProfile.bookmarksCount:myProfile.bookmarksCount- 1 }}
-                    </p>
-                  </div>
+                      <svg
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        class="w-4.25 h-4.25"
+                      >
+                        <path d="M3 2h10a1 1 0 011 1v10l-4-2.5L6 13V3a1 1 0 011-1z" />
+                      </svg>
+                    </div>
+
+                    <div class="flex flex-col gap-px">
+                      <span class="text-[19px] font-bold tracking-tight">{{
+                        profile.bookmarksCount === 0
+                          ? profile.bookmarksCount
+                          : profile.bookmarksCount - 1
+                      }}</span>
+                      <span
+                        class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium"
+                      >
+                        Saved posts
+                      </span>
+                    </div>
+                  </a>
+                }
+
+                  <!-- Posts -->
+                  <a
+                    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5 rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed] transition hover:bg-[#eff4ff] hover:border-[#bfcfff] hover:-translate-y-0.5 hover:shadow-sm"
+                  >
+                    <div
+                      class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#ecfdf5] text-[#10b981]"
+                    >
+                      <svg
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        class="w-4.25 h-4.25"
+                      >
+                        <rect x="2" y="3" width="12" height="10" rx="1.5" />
+                        <path d="M5 7h6M5 10h4" />
+                      </svg>
+                    </div>
+
+                    <div class="flex flex-col gap-px">
+                      <span class="text-[19px] font-bold tracking-tight">{{ postsCount }}</span>
+                      <span
+                        class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium"
+                      >
+                        {{myId===profile.id?'My':'User'}} posts
+                      </span>
+                    </div>
+                  </a>
+
+                 
                 </div>
               </div>
-              <div class="ssssssssss">
-<!-- stats bar -->
-<div class="flex flex-wrap gap-2 md:px-7 border-t border-[#e4e7ed]  mt-4.5  py-4.5">
 
-  <!-- Followers -->
-  <a
-    
-    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
-           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
-           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
-           hover:-translate-y-0.5 hover:shadow-sm"
-  >
-    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#dbeafe] text-[#2563eb]">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
-        <circle cx="8" cy="5" r="2.5"/>
-        <path d="M2 13c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
-      </svg>
-    </div>
-
-    <div class="flex flex-col gap-px">
-      <span class="text-[19px] font-bold tracking-tight"> {{ myProfile.followersCount }}</span>
-      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
-        Followers
-      </span>
-    </div>
-  </a>
-
-
-  <!-- Following -->
-  <a
-    
-    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
-           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
-           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
-           hover:-translate-y-0.5 hover:shadow-sm"
-  >
-    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#ede9fe] text-[#7c3aed]">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
-        <circle cx="5.5" cy="5" r="2.5"/>
-        <circle cx="10.5" cy="5" r="2.5"/>
-        <path d="M1 13c0-3 2-5 4.5-5M15 13c0-3-2-5-4.5-5M8 13c0-2.5 1.5-4.5 4-4.5"/>
-      </svg>
-    </div>
-
-    <div class="flex flex-col gap-px">
-      <span class="text-[19px] font-bold tracking-tight"> {{ myProfile.followingCount }}</span>
-      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
-        Following
-      </span>
-    </div>
-  </a>
-
-
-  <!-- Bookmarks -->
-  <a
-    
-    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
-           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
-           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
-           hover:-translate-y-0.5 hover:shadow-sm"
-  >
-    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#fef3c7] text-[#d97706]">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
-        <path d="M3 2h10a1 1 0 011 1v10l-4-2.5L6 13V3a1 1 0 011-1z"/>
-      </svg>
-    </div>
-
-    <div class="flex flex-col gap-px">
-      <span class="text-[19px] font-bold tracking-tight">{{ myProfile.bookmarksCount===0? myProfile.bookmarksCount:myProfile.bookmarksCount- 1 }}</span>
-      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
-        Bookmarks
-      </span>
-    </div>
-  </a>
-
-
-  <!-- Posts -->
-  <a
-    
-    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
-           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
-           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
-           hover:-translate-y-0.5 hover:shadow-sm"
-  >
-    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#ecfdf5] text-[#10b981]">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
-        <rect x="2" y="3" width="12" height="10" rx="1.5"/>
-        <path d="M5 7h6M5 10h4"/>
-      </svg>
-    </div>
-
-    <div class="flex flex-col gap-px">
-      <span class="text-[19px] font-bold tracking-tight">{{ postsCount }}</span>
-      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
-        My posts
-      </span>
-    </div>
-  </a>
-
-
-  <!-- Saved -->
-  <a
-    
-    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5
-           rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed]
-           transition hover:bg-[#eff4ff] hover:border-[#bfcfff]
-           hover:-translate-y-0.5 hover:shadow-sm"
-  >
-    <div class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#ffe4e6] text-[#e11d48]">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" class="w-4.25 h-4.25">
-        <path d="M8 13.5S2 9.5 2 5.5a3.5 3.5 0 016-2.45A3.5 3.5 0 0114 5.5c0 4-6 8-6 8z"/>
-      </svg>
-    </div>
-
-    <div class="flex flex-col gap-px">
-      <span class="text-[19px] font-bold tracking-tight">{{ myProfile.bookmarksCount }}</span>
-      <span class="text-[11px] uppercase tracking-[0.5px] text-[#9aa0b0] font-medium">
-        Saved posts
-      </span>
-    </div>
-  </a>
-
-</div>
-              </div>
-              
-              <div class="mt-5 grid gap-4 lg:grid-cols-[1.3fr_.7fr]">
+              <div class="mt-5">
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <h3 class="text-sm font-extrabold text-slate-800">About</h3>
                   <div class="mt-3 space-y-2 text-sm text-slate-600">
                     <p class="flex items-center gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="15"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-mail text-slate-500"
-                        aria-hidden="true"
-                      >
-                        <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path>
-                        <rect x="2" y="4" width="20" height="16" rx="2"></rect></svg
-                      >{{ myProfile.email }}
+                      <i class="fa-regular fa-envelope"></i>
+                      {{ profile.email }}
                     </p>
                     <p class="flex items-center gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        height="15"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-users text-slate-500"
-                        aria-hidden="true"
-                      >
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                        <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <circle cx="9" cy="7" r="4"></circle></svg
-                      >Active
+                      <i class="fa-regular fa-calendar"></i
+                      >{{ `Created at: ${(profile.createdAt | date)}` }}
                     </p>
-                  </div>
-                </div>
-                <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                  <div class="rounded-2xl border border-[#dbeafe] bg-[#f6faff] px-4 py-3">
-                    <p class="text-xs font-bold uppercase tracking-wide text-[#1f4f96]">My posts</p>
-                    <p class="mt-1 text-2xl font-black text-slate-900">{{ postsCount }}</p>
-                  </div>
-                  <div class="rounded-2xl border border-[#dbeafe] bg-[#f6faff] px-4 py-3">
-                    <p class="text-xs font-bold uppercase tracking-wide text-[#1f4f96]">
-                      Saved posts
+                    <p class="flex items-center gap-2">
+                      <i
+                        class="fa-solid"
+                        [class]="
+                          profile.gender === 'male'
+                            ? 'fa-mars text-blue-700'
+                            : 'fa-venus text-pink'
+                        "
+                      ></i>
+                      {{ profile.gender }}
                     </p>
-                    <p class="mt-1 text-2xl font-black text-slate-900">
-                      {{ myProfile.bookmarksCount }}
+                    <p class="flex items-center gap-2">
+                      <i class="fa-regular fa-calendar"></i>
+                      {{ `Date of birth: ${(profile.dateOfBirth | date)}` }}
                     </p>
                   </div>
                 </div>
@@ -438,7 +436,10 @@
           </div>
         </section>
       }
-      <section class="space-y-4">
+@if (profile&&myId===profile._id) {
+  
+      <!-- view my posts or bookmarked posts  -->
+      <section class="my-4">
         <div
           class="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm"
         >
@@ -452,7 +453,7 @@
                   ? 'bg-white text-[#1877f2] shadow-sm'
                   : ' text-slate-600 hover:text-slate-900'
               "
-              class="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition"
+              class="inline-flex items-center cursor-pointer justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -482,7 +483,7 @@
                   ? 'bg-white text-[#1877f2] shadow-sm'
                   : ' text-slate-600 hover:text-slate-900'
               "
-              class="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition"
+              class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -507,15 +508,32 @@
             PostsList.length
           }}</span>
         </div>
-        <div class="space-y-3">
-          @for (post of PostsList; track post._id) {
+        
+      </section>
+
+}
+<div class="space-y-3">
+        @if (postsLoading) {
+           <app-loading [loadingType]="'posts'"></app-loading>
+           <app-loading [loadingType]="'posts'"></app-loading>
+
+        }@else {
+            @for (post of PostsList; track post._id) {
             <app-single-post
               (callParentFunction)="callBackfunction()"
               [post]="post"
             ></app-single-post>
+          }@empty {
+          <p class="rounded-xl text-center border border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+            @if(profile && profile._id!==myId){No posts yet.}
+            @else{
+              {{activeTab==='myposts'?'You have not posted yet.':'No saved posts yet.'}}
+            }
+            
+          </p>
           }
+        }
         </div>
-      </section>
       @if (openCoverPrivacy) {
         <div class="fixed inset-0 z-90 flex items-center justify-center bg-black/60 p-4">
           <div class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-xl">
@@ -524,7 +542,8 @@
               Choose who can see the post generated for your new cover photo.
             </p>
             <div class="mt-4">
-              <select [formControl]="coverPrivacy"
+              <select
+                [formControl]="coverPrivacy"
                 class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 outline-none focus:border-[#1877f2]"
               >
                 <option value="public">Public</option>
@@ -577,11 +596,11 @@
           ><img
             alt="cover photo"
             class="max-h-full max-w-full object-contain"
-            [src]="viewImageFlag === 'cover' ? myProfile.cover : myProfile.photo"
+            [src]="viewImageFlag === 'cover' ? profile.cover : profile.photo"
           />
         </div>
       }
-      @if (openPhotoPrivacy){
+      @if (openPhotoPrivacy) {
         <div class="fixed inset-0 z-90 flex items-center justify-center bg-black/70 p-4">
           <div
             class="w-full max-w-140 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl sm:p-5"
@@ -629,7 +648,8 @@
               <p class="mb-1 text-xs font-bold uppercase tracking-wide text-slate-500">
                 Post privacy
               </p>
-              <select  [formControl]="photoPrivacy"
+              <select
+                [formControl]="photoPrivacy"
                 class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 outline-none focus:border-[#1877f2]"
               >
                 <option value="public">Public</option>
@@ -638,12 +658,14 @@
               </select>
             </div>
             <div class="mt-5 flex items-center justify-end gap-2">
-              <button (click)="closePhotoPrivacyWindow()"
+              <button
+                (click)="closePhotoPrivacyWindow()"
                 type="button"
                 class="inline-flex cursor-pointer items-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-bold text-slate-600 transition hover:bg-slate-50"
               >
                 Cancel</button
-              ><button  (click)="submitUploadProfilePhoto()"
+              ><button
+                (click)="submitUploadProfilePhoto()"
                 type="button"
                 class="inline-flex cursor-pointer items-center rounded-lg bg-[#1877f2] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#166fe5] disabled:cursor-not-allowed disabled:opacity-60"
               >

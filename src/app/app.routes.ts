@@ -26,7 +26,7 @@ export const routes: Routes = [
     {path:"" ,component:MainLayoutComponent ,canActivate:[hasTokenGuard],
         children:[
         {path:"feed" ,component:FeedComponent , title:"feed page"},
-        {path:"profile" ,component:ProfileComponent , title:"profile page"},
+        {path:"profile/:id" ,component:ProfileComponent , title:"profile page"},
         {path:"notification",component:NotificationComponent , title:"notification page"},
         {path:"changePassword",component:ChangePasswordComponent , title:"change password page"},
         {path:"suggestions",component:SuggestionsComponent , title:"suggestions page"},

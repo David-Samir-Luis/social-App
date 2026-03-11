@@ -36,6 +36,9 @@ export class UserService {
   getUserPosts(userId:string):Observable<any>{
     return this.httpClient.get(`${environment.baseUrl}/users/${userId}/posts`)
   }
+  getUserProfile(userId:string):Observable<any>{
+    return this.httpClient.get(`${environment.baseUrl}/users/${userId}/profile`)
+  }
   getSearchSuggestions(search:string,limit:number,pageNumber:number):Observable<any>{
     return this.httpClient.get(`${environment.baseUrl}/users//suggestions?page=${pageNumber}&limit=${limit}&q=${search}`)
   }

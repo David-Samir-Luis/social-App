@@ -97,18 +97,17 @@
            <span class="hidden md:inline">suggestions</span>
           </a>
         </li>
-
         <li>
           <a
-            routerLink="/profile"
+            [routerLink]="['/profile',profileData?profileData._id:'']"
             routerLinkActive="bg-white !text-mainColor"
             class="relative flex items-center gap-2 rounded-xl px-3.5 md:py-2 py-3  text-sm font-extrabold text-slate-600 transition hover:bg-white/90 hover:text-slate-900 w-full"
             aria-current="page"
           >
             <i class="fa-solid fa-circle-user" aria-hidden="true"></i>
-            
-            <span class="hidden md:inline">Profile</span>
-          </a>
+
+         <span class="hidden md:inline">Profile</span>
+        </a>
         </li>
 
         <li>
@@ -118,14 +117,15 @@
             class="relative flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-extrabold text-slate-600 transition hover:bg-white/90 hover:text-slate-900 w-full"
             aria-current="page"
           >
-            <span class="relative">
+            @if (UnreadCountService && UnreadCountService.updatedUnreadCount>0) {
+              <span class="relative">
               <i class="fa-solid fa-bell" aria-hidden="true"></i>
                <span class="absolute -right-2.5 -top-2 inline-flex min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-2xs font-black leading-4 text-white">
-                3
+                {{UnreadCountService.updatedUnreadCount}}
               </span>
-             
-            
               </span>
+            }
+
                <!-- Notification badge -->
               <span class="hidden md:inline">
               <span class="ml-1">Notifications</span>
