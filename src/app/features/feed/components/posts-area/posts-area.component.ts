@@ -151,7 +151,7 @@ export class PostsAreaComponent implements OnInit {
         // reset Inputs
         this.content.reset('');
         this.imgUrl='';
-        this.getFeedPostsData();
+        this.getPosts(this.tab);
         
        }
       },

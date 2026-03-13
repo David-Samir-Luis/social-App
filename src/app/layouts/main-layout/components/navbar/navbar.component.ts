@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit,OnDestroy{
   profileData!:ImyProfile;
    ngOnInit(): void {
     this.checkTokenExpiration();
-    initFlowbite();
+    setTimeout(()=>{initFlowbite()},0)
      this.getProfileData();
      this.getUnreadCountData()
      this.intervalId=setInterval(() => this.getUnreadCountData(), 5000)
