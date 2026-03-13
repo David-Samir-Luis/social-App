@@ -86,11 +86,15 @@
       </label>
 
       <button
-        [disabled]="!imgUrl && !content.value"
+        [disabled]="(!imgUrl && !content.value )|| isloading"
         class="cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 bg-blue-500 text-white px-5 py-2 rounded-lg font-bold text-[14px] flex items-center gap-2 focus:ring-4 focus:ring-blue-200 outline-none"
       >
+       @if(isloading){Posting...}
+       @else {
         Post
         <i class="fa-regular fa-paper-plane text-sm"></i>
+       }
+        
       </button>
     </div>
   </form>

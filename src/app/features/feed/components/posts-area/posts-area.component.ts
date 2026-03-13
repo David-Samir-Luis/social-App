@@ -17,6 +17,7 @@ export class PostsAreaComponent implements OnInit {
   readonly userDataService = inject(UserDataService);
   readonly userService = inject(UserService);
   readonly activatedRoute = inject(ActivatedRoute);
+  isloading:boolean=false;
   tab:string='feed';   // 'feed'|'myPosts'|'community'|'saved'
   postsList: Ipost[] = [];
   loading:boolean=true;
@@ -143,19 +144,21 @@ export class PostsAreaComponent implements OnInit {
   }
 
   createPostInView(formData:FormData):void{
-   
-
+  if (!this.isloading) {
+    this.isloading=true;
     this.postsService.createPost(formData).subscribe({
       next:(res)=>{
        if (res.success) {
         // reset Inputs
         this.content.reset('');
         this.imgUrl='';
+        this.isloading=false;
         this.getPosts(this.tab);
         
        }
       },
     })
+  }
   }
 
     readImg(event:Event){
