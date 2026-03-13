@@ -37,6 +37,8 @@ toggleShowPassword(pass:HTMLInputElement){
          if (res.success) {
           localStorage.setItem('socialToken',res.data.token)
           localStorage.setItem('socialUser',JSON.stringify(res.data.user))
+          localStorage.setItem('loginTime',Date.now().toString())
+          
 
            this.router.navigate(['/feed']);
          }

@@ -9,10 +9,11 @@ import { SharePostComponent } from "../../../features/feed/components/share-post
 import { CommentComponent } from "./components/comment/comment.component";
 import { PostingSharedComponent } from "./components/posting-shared/posting-shared.component";
 import { ToastrService } from 'ngx-toastr';
+import { OpenImageFullScreenService } from '../../../layouts/main-layout/components/open-image-full-screen/open-image-full-screen.service';
 
 @Component({
   selector: 'app-single-post',
-  imports: [ReactiveFormsModule, TimeAgoPipe, AsyncPipe, RouterLink, SharePostComponent, CommentComponent, PostingSharedComponent],
+  imports: [ReactiveFormsModule,TimeAgoPipe, AsyncPipe, RouterLink, SharePostComponent, CommentComponent, PostingSharedComponent],
   templateUrl: './single-post.component.html',
   styleUrl: './single-post.component.css',
 })
@@ -26,7 +27,8 @@ export class SinglePostComponent implements AfterViewInit{
     loginedUserId: string = JSON.parse(localStorage.getItem('socialUser')!)?._id;
     private readonly postsService = inject(PostsService);
     private readonly tastr = inject(ToastrService);
-   
+    readonly openImageFullScreenService = inject(OpenImageFullScreenService);
+
     editContent:FormControl=new FormControl('');
     editPrivacy:FormControl=new FormControl('');
 

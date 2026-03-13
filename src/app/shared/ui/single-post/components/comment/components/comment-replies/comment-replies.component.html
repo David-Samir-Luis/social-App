@@ -1,0 +1,20 @@
+<div class="relative mt-2 ml-5 pl-4">
+  <span class="absolute bottom-10 left-0 top-1 w-px rounded-full bg-slate-300"></span>
+  
+         <div class="grid gap-2">
+         @if (isLoading) {
+      <app-loading [loadingType]="'suggested user'"></app-loading>
+    }@else {
+        @for (comment of repliesList; track comment._id) {
+        <!-- User Data -->
+          <app-single-comment (eventEmitter)="callBackDeleteComment($event)" [comment]="comment" [type]="'reply'"></app-single-comment>
+        } @empty {
+      <div class="rounded-2xl border border-slate-200 bg-white px-4 py-4 text-center">
+        <p class="mt-1 text-sm font-medium text-slate-500">No replies yet.</p>
+      </div>
+    }
+    }  
+      </div>
+      <app-create-comment-section (callParentFunction)="getCommentReplies()" [postId]="postId" [type]="'reply'"  [commentId]="commentId" ></app-create-comment-section>
+  </div>
+

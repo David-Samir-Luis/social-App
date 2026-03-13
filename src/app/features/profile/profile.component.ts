@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingComponent } from "../../shared/ui/loading/loading.component";
 import { NavService } from '../../core/uitilites/nav.service';
+import { OpenImageFullScreenService } from '../../layouts/main-layout/components/open-image-full-screen/open-image-full-screen.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,8 @@ export class ProfileComponent  implements OnInit{
   private readonly userService=inject(UserService);
   private readonly activatedRoute=inject(ActivatedRoute);
   private readonly userDataService=inject(UserDataService);
+  readonly openImageFullScreenService = inject(OpenImageFullScreenService);
+  
    readonly navService=inject(NavService);
   profile!:IuserProfile|ImyProfile;
   isFollowing:boolean=false;
@@ -31,7 +34,6 @@ export class ProfileComponent  implements OnInit{
   openCoverPrivacy=false;
   openPhotoPrivacy=false;
   profileUrl: string | ArrayBuffer | null | undefined=''
-  viewImageFlag:string='';
   activeTab:'myposts'|'saved'='myposts'
   PostsList:Ipost[]=[];
   myId:string=JSON.parse(localStorage.getItem('socialUser')!)._id;
@@ -186,14 +188,6 @@ export class ProfileComponent  implements OnInit{
       this.profile.cover='';
       this.userService.removeCoverPhoto().subscribe();
     }
-
-viewImage(ImageToView:'cover'|'photo'):void{
-  this.viewImageFlag=ImageToView;
-}
-
-cancelImageInFullScreen():void{
-   this.viewImageFlag='';
-}
 
 getUserProfileData(userId: string){
   this.userService.getUserProfile(userId).subscribe(

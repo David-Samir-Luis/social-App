@@ -160,9 +160,9 @@
         }
 
         @if (post.image) {
-          <img
+          <img (click)="openImageFullScreenService.openImagebyURL(post.image)"
             [src]="post.image"
-            class="w-full max-h-90 object-cover rounded shadow mt-2"
+            class="w-full cursor-zoom-in max-h-90 object-cover rounded shadow mt-2"
             alt="post image"
           />
         }

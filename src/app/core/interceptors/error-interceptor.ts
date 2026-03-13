@@ -9,6 +9,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toastr = inject(ToastrService);
   return next(req).pipe(catchError((err) =>{
     console.log(err);
+    
     if (err.error.message==="invalid token .. login again") {
       localStorage.removeItem('socialToken');
       router.navigate(['/login']);

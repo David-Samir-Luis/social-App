@@ -1,0 +1,150 @@
+ <!-- User Data -->
+        <div class="relative flex items-start gap-2">
+          <img [routerLink]="['/profile',comment.commentCreator._id]"
+            [alt]="comment.commentCreator.name"
+            class="mt-0.5 h-8 w-8 rounded-full object-cover cursor-pointer"
+            [src]="comment.commentCreator.photo"
+          />
+          <div class="min-w-0 flex-1">
+            <div class="relative inline-block max-w-full rounded-2xl bg-secondColor px-3 py-2">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <p [routerLink]="['/profile',comment.commentCreator._id]"  class="text-xs cursor-pointer font-bold text-slate-900">{{ comment.commentCreator.name }}</p>
+                  <p class="text-xs text-slate-500">
+                    @{{ comment.commentCreator.username }} · {{ comment.createdAt |timeAgo |async}}
+                  </p>
+                </div>
+                 @if (comment.commentCreator._id===userDataService._id) {
+                <div class="relative" data-comment-menu-root="true">
+                <button
+                  [id]="`dropdownMenuIconButton${comment._id}`"
+                  [attr.data-dropdown-toggle]="'dropdownDots' + comment._id"
+                  data-dropdown-placement="bottom-start"
+                  class="rounded-full cursor-pointer p-1 text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-ellipsis"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                  </svg>
+                </button>
+                <div
+                  [id]="'dropdownDots' + comment._id"
+                  class="absolute hidden right-0 z-20 mt-1 w-32 overflow-hidden rounded-lg border border-slate-200 bg-white py-1 shadow-lg"
+                >
+                  <button (click)="editCommentData(comment)" type="button"
+                    class="flex w-full items-center gap-2 cursor-pointer hover:bg-neutral-tertiary-medium hover:text-heading px-3 py-1.5 text-left text-xs font-semibold text-slate-700"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-pencil"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                      ></path>
+                      <path d="m15 5 4 4"></path></svg
+                    >Edit</button
+                  ><button
+                    (click)="deletecommentItem(comment)"
+                    class="flex w-full items-center gap-2 px-3 py-1.5 cursor-pointer text-left text-xs font-semibold text-rose-600 hover:bg-rose-50"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-trash2 lucide-trash-2"
+                      aria-hidden="true"
+                    >
+                      <path d="M10 11v6"></path>
+                      <path d="M14 11v6"></path>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                      <path d="M3 6h18"></path>
+                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg
+                    >Delete
+                  </button>
+                </div>
+              </div>
+              }
+              </div>
+              <!-- content Data -->
+              @if (isEdit) {
+                <div class="mt-2 flex items-center gap-2">
+                  <input [formControl]="editContent"
+                    class="w-full rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm"
+                  />
+                  <button (click)="saveCommentChanges(comment)" [disabled]="!this.editContent.value"
+                    class="rounded-full cursor-pointer bg-[#1877f2] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#166fe5] disabled:opacity-60"
+                  >
+                    Save</button
+                  ><button (click)="cancelEdit()"
+                    class="rounded-full cursor-pointer border border-slate-300 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              } @else {
+                <p class="mt-1 whitespace-pre-wrap text-sm text-slate-800">{{ comment.content }}</p>
+              }
+              @if (comment.image) {
+                <img (click)="openImageFullScreenService.openImagebyURL(comment.image)"
+                  alt="Comment"
+                  class="mt-2 max-h-52 w-full cursor-zoom-in rounded-lg object-cover"
+                  [src]="comment.image"
+                />
+              }
+            </div>
+            <div class="mt-1.5 flex items-center justify-between px-1">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-semibold text-slate-400">{{ comment.createdAt |timeAgo |async}}</span
+                ><button (click)="likeComment(comment)"
+                  [class]="comment.likes.length>0?  'text-[#1877f2]':'text-slate-500'"
+                  class="text-xs cursor-pointer font-semibold hover:underline disabled:opacity-60 "
+                >
+                  Like ({{ comment.likes.length }})</button
+                >
+               
+                 <button #reply (click)="showRepliesFlag=!showRepliesFlag"
+                  class="text-xs  cursor-pointer font-semibold transition hover:underline disabled:opacity-60 text-slate-500 hover:text-[#1877f2]"
+                  [class.hidden]="type==='reply'"
+                >
+                 @if (showRepliesFlag) {Hide replies}@else { Reply {{comment.repliesCount?`(${comment.repliesCount})`:''}}}
+                </button>
+               
+              </div>
+             
+            </div>
+           @if (type==='comment') {
+             @defer (on interaction(reply)) {
+              
+              @if (showRepliesFlag) {<app-comment-replies [commentId]="comment._id" [postId]="comment.post"></app-comment-replies>}
+            }
+           }
+          </div>
+        </div>

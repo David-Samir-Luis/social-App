@@ -39,7 +39,7 @@
   @if (sharedPost.image) {
     <div class="border-t border-slate-200">
     <button type="button" class="group relative block w-full cursor-zoom-in">
-      <img
+      <img (click)="openImageFullScreenService.openImagebyURL(sharedPost.image)"
         alt="Shared post"
         class="max-h-140 w-full object-cover"
         [src]="sharedPost.image"
