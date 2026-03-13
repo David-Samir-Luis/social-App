@@ -117,14 +117,14 @@
             class="relative flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-extrabold text-slate-600 transition hover:bg-white/90 hover:text-slate-900 w-full"
             aria-current="page"
           >
+          <span class="relative">
+            <i class="fa-solid fa-bell" aria-hidden="true"></i>
             @if (UnreadCountService && UnreadCountService.updatedUnreadCount>0) {
-              <span class="relative">
-              <i class="fa-solid fa-bell" aria-hidden="true"></i>
                <span class="absolute -right-2.5 -top-2 inline-flex min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-2xs font-black leading-4 text-white">
                 {{UnreadCountService.updatedUnreadCount}}
               </span>
-              </span>
             }
+              </span>
 
                <!-- Notification badge -->
               <span class="hidden md:inline">
