@@ -182,7 +182,5 @@ export class PostsAreaComponent implements OnInit {
      closeImg():void{
     this.imgUrl='';
   }
-
-
   
 }

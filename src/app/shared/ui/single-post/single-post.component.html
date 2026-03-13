@@ -173,7 +173,8 @@
 
       <!-- like share comments  counts & view details -->
       <div class="flex items-center justify-between text-[13px] text-slate-500 mb-3 px-1">
-        <div class="flex items-center gap-1.5 cursor-pointer hover:underline">
+        <div #showLikes (click)="showLikesFlag=true"
+        class="flex items-center gap-1.5 cursor-pointer hover:underline">
           <div
             class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-2xs"
           >
@@ -223,8 +224,13 @@
         @defer (on interaction(showShareModal)) {
         <app-share-post [post]="post"></app-share-post>
       }
+        @defer (on interaction(showLikes)) {
+        @if(showLikesFlag){
+          <app-show-likes (callCloseWindow)="showLikesFlag=$event"  [postId]="post._id"></app-show-likes>
+        }
+      }
 
 
 
-      
+    
     </div>

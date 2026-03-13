@@ -43,6 +43,9 @@ export class PostsService {
   likeOnPost(postId:string):Observable<any>{
     return this.httpClient.put(`${environment.baseUrl}/posts/${postId}/like`,'')
   }
+  getPostLikes(postId:string):Observable<any>{
+    return this.httpClient.get(`${environment.baseUrl}/posts/${postId}/likes?page=1&limit=20`);
+  }
 
 
   

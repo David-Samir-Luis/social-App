@@ -1,0 +1,13 @@
+ <a [routerLink]="['/profile',user._id]"
+          class="flex items-center border border-slate-200 gap-3 rounded-xl px-3 py-2 transition hover:bg-slate-100"
+          data-discover="true"
+          ><img
+            [alt]="user.name"
+            class="h-10 w-10 rounded-full object-cover"
+            [src]="user.photo"
+          />
+          <div class="min-w-0">
+            <p class="truncate text-sm font-bold text-slate-900">{{user.name}}</p>
+            <p class="truncate text-xs text-slate-500">@{{user.username}}</p>
+          </div></a
+        >

@@ -10,10 +10,11 @@ import { CommentComponent } from "./components/comment/comment.component";
 import { PostingSharedComponent } from "./components/posting-shared/posting-shared.component";
 import { ToastrService } from 'ngx-toastr';
 import { OpenImageFullScreenService } from '../../../layouts/main-layout/components/open-image-full-screen/open-image-full-screen.service';
+import { ShowLikesComponent } from "./components/show-likes/show-likes.component";
 
 @Component({
   selector: 'app-single-post',
-  imports: [ReactiveFormsModule,TimeAgoPipe, AsyncPipe, RouterLink, SharePostComponent, CommentComponent, PostingSharedComponent],
+  imports: [ReactiveFormsModule, TimeAgoPipe, AsyncPipe, RouterLink, SharePostComponent, CommentComponent, PostingSharedComponent, ShowLikesComponent],
   templateUrl: './single-post.component.html',
   styleUrl: './single-post.component.css',
 })
@@ -21,9 +22,11 @@ export class SinglePostComponent implements AfterViewInit{
   @Input({required:true}) post!:Ipost;
   @Output() callParentFunction= new EventEmitter<void>();
    isEdit:boolean=false;
+   showLikesFlag:boolean=true;
     postToEditId:string='';
     isSaved:boolean=false;
     showCommentsFlag:boolean=false;
+
     loginedUserId: string = JSON.parse(localStorage.getItem('socialUser')!)?._id;
     private readonly postsService = inject(PostsService);
     private readonly tastr = inject(ToastrService);
@@ -108,7 +111,7 @@ export class SinglePostComponent implements AfterViewInit{
       this.postsService.likeOnPost(post._id).subscribe({
         next:(res)=>{
           post.likes=res.data.post.likes;
-          post.likesCount=post.likes.length
+          post.likesCount=post.likes.length;
         },
       })
     }
@@ -124,6 +127,6 @@ export class SinglePostComponent implements AfterViewInit{
   this.closeDropdown(postId);
 
 }
-  
+
 
 }
