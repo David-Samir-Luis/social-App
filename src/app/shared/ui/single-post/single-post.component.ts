@@ -110,6 +110,16 @@ export class SinglePostComponent implements AfterViewInit{
     }
   
     likePost(post:Ipost){
+      // to show react instantly without waiting for response
+      const index= post.likes.findIndex((item)=>item===post.user._id)
+      if (index>-1) {
+        post.likes.splice(index,1);
+      }else{
+        post.likes.push(post.user._id)        
+      }
+      post.likesCount=post.likes.length;
+      
+      
       this.postsService.likeOnPost(post._id).subscribe({
         next:(res)=>{
           post.likes=res.data.post.likes;
