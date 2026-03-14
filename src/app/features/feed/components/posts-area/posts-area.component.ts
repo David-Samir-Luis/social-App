@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PostsService } from '../../../../core/services/posts.service';
@@ -12,7 +12,7 @@ import { SinglePostComponent } from "../../../../shared/ui/single-post/single-po
   templateUrl: './posts-area.component.html',
   styleUrl: './posts-area.component.css',
 })
-export class PostsAreaComponent implements OnInit {
+export class PostsAreaComponent implements OnInit,AfterViewInit  {
   private readonly postsService = inject(PostsService);
   readonly userDataService = inject(UserDataService);
   readonly userService = inject(UserService);
@@ -23,21 +23,54 @@ export class PostsAreaComponent implements OnInit {
   loading:boolean=true;
   imgFile!:File|null;
   imgUrl: string | ArrayBuffer | null | undefined='';
-
    content:FormControl=new FormControl('');
   privacy:FormControl=new FormControl('public');
-
+  pageNumber :number= 1;
+  loadingMore :boolean= false;
+  finished:boolean = false;
+   @ViewChild('scrollTrigger')
+  trigger!: ElementRef;
    ngOnInit(): void {
-    
     this.activatedRoute.queryParamMap.subscribe(
       query=>{
         this.tab=query.get('tab')|| 'feed' ;
+        this.loading=true;
+        this.pageNumber= 1;
+        this.loadingMore = false;
+        this.finished = false;
         this.getPosts(this.tab);
       }
     )
   }
+   ngAfterViewInit() {
+    this.createObserver();
+  }
+
+  createObserver() {
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+
+        const entry = entries[0];
+
+        if (entry.isIntersecting) {
+          this.getPosts(this.tab);
+        }
+
+      },
+      {
+        root: null,
+        threshold: 0.1
+      }
+    );
+
+    observer.observe(this.trigger.nativeElement);
+  }
+
 
   getPosts(tab:string):void{
+    if (this.loadingMore || this.finished) return;
+    this.loadingMore=true;
     switch (tab) {
       case 'feed':
         this.getFeedPostsData()
@@ -57,14 +90,22 @@ export class PostsAreaComponent implements OnInit {
     }
   }
   getFeedPostsData(): void {
-    this.loading=true;
-    this.postsService.getFeedPosts().subscribe({
+    this.postsService.getFeedPosts(this.pageNumber).subscribe({
       next: (res) => {
-        if(this.tab==='feed'){
-          this.loading=false;
+       if (this.loading) {
+        this.loading=false;
         this.postsList = res.data.posts;
+        this.pageNumber++;
         }
-
+      else{
+        if (res.meta.pagination.currentPage===res.meta.pagination.numberOfPages) {
+          this.finished = true;
+      } else {
+        this.postsList.push(...res.data.posts);
+        this.pageNumber++;
+      }
+      }
+       this.loadingMore=false;
       },
       error: () => {
         this.loading=false;
@@ -74,13 +115,23 @@ export class PostsAreaComponent implements OnInit {
 
   }
   getFeedMyPostsData(): void {
-    this.loading=true;
-    this.postsService.getFeedMyPosts().subscribe({
+    
+    this.postsService.getFeedMyPosts(this.pageNumber).subscribe({
       next: (res) => {
-        if(this.tab==='myPosts'){
-          this.loading=false;
+        if (this.loading) {
+        this.loading=false;
         this.postsList = res.data.posts;
+        this.pageNumber++;
         }
+      else{
+        if (res.meta.pagination.currentPage===res.meta.pagination.numberOfPages) {
+          this.finished = true;
+      } else {
+        this.postsList.push(...res.data.posts);
+        this.pageNumber++;
+      }
+      }
+      this.loadingMore=false;
       },
       error: () => {
         this.loading=false;
@@ -88,13 +139,23 @@ export class PostsAreaComponent implements OnInit {
     })
   }
   getFeedCommunityPostsData(): void {
-    this.loading=true;
-    this.postsService.getFeedCommunityPosts().subscribe({
+    
+    this.postsService.getFeedCommunityPosts(this.pageNumber).subscribe({
       next: (res) => {
-        if(this.tab==='community'){
-          this.loading=false;
+      if (this.loading) {
+        this.loading=false;
         this.postsList = res.data.posts;
+        this.pageNumber++;
         }
+      else{
+        if (res.meta.pagination.currentPage===res.meta.pagination.numberOfPages) {
+          this.finished = true;
+      } else {
+        this.postsList.push(...res.data.posts);
+        this.pageNumber++;
+      }
+      }
+      this.loadingMore=false;
       },
       error: () => {
         this.loading=false;
@@ -102,14 +163,11 @@ export class PostsAreaComponent implements OnInit {
     })
   }
   getbookmarksData(): void {
-    this.loading=true;
+    
     this.userService.getbookmarks().subscribe({
       next: (res) => {
-        if(this.tab==='saved'){
-          this.loading=false;
-          
+        this.loading=false;
         this.postsList = res.data.bookmarks;
-        }
       },
       error: () => {
         this.loading=false;

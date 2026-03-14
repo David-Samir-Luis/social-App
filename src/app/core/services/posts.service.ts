@@ -12,14 +12,14 @@ export class PostsService {
  
 
 
-  getFeedPosts():Observable<any>{
-    return this.httpClient.get(`${environment.baseUrl}/posts/feed?only=following&limit=50&page=1`)
+  getFeedPosts(pageNumber:number):Observable<any>{
+    return this.httpClient.get(`${environment.baseUrl}/posts/feed?only=following&limit=30&page=${pageNumber}`)
   }
-  getFeedMyPosts():Observable<any>{
-    return this.httpClient.get(`${environment.baseUrl}/posts/feed?only=me&limit=50&page=1`)
+  getFeedMyPosts(pageNumber:number):Observable<any>{
+    return this.httpClient.get(`${environment.baseUrl}/posts/feed?only=me&limit=30&page=${pageNumber}`)
   }
-  getFeedCommunityPosts():Observable<any>{
-    return this.httpClient.get(`${environment.baseUrl}/posts/feed?only=all&limit=50&page=1`)
+  getFeedCommunityPosts(pageNumber:number):Observable<any>{
+    return this.httpClient.get(`${environment.baseUrl}/posts/feed?only=all&limit=30&page=${pageNumber}`)
   }
 
   createPost(body:object):Observable<any>{
