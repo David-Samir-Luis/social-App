@@ -42,15 +42,18 @@
               <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
               <circle cx="9" cy="7" r="4"></circle>
             </svg>
-            <h1 class="text-xl font-extrabold text-slate-900">All Suggested Friends</h1>
+            <h1 class="text-xl font-extrabold text-slate-900">{{userId?'':'All Suggested '}}Friends</h1>
           </div>
           <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-600"
-            >{{SuggestionList.length}}</span
+            >{{SuggestionList?SuggestionList.length:0}}</span
           >
         </div>
 
+        @if (userId) {
+        <app-search-friends-input (suggestedList)="searchfriends=$event"></app-search-friends-input>
+        }@else {
         <app-search-friends-input (suggestedList)="getFollowSuggestionsByPageData($event)"></app-search-friends-input>
-      
+        }
         <div class="grid gap-3 sm:grid-cols-2">
       @if (loading) {
         @for (item of [1,2,3,4,5,6,7,8]; track $index) {
@@ -58,15 +61,16 @@
         }
       }
       @else {
-          @for (user of SuggestionList; track user._id) {
-        <app-sugested-user (functionCall)="callBackforFollowUser($event)" [user]="user" ></app-sugested-user>
+          @for (user of   userId?(SuggestionList|searchUser:searchfriends) :SuggestionList; track user._id) {
+        <app-sugested-user [friend]="userId? true:false" class="block  min-w-0" (functionCall)="callBackforFollowUser($event)" [user]="user" ></app-sugested-user>
         }
         @empty {
           <p class="text-sm text-slate-500">No users matched your search.</p>
         }
       }
+
       </div>
-        @if (SuggestionList.length) {
+        @if (SuggestionList && !userId) {
           <button (click)="getFollowSuggestionsByPageData(inputValue)"
           class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-100 disabled:opacity-60"
         >

@@ -3,15 +3,15 @@ import { UserService } from '../../core/services/user.service';
 import { SinglePostComponent } from "../../shared/ui/single-post/single-post.component";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserDataService } from '../../core/services/user-data.service';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LoadingComponent } from "../../shared/ui/loading/loading.component";
 import { NavService } from '../../core/uitilites/nav.service';
 import { OpenImageFullScreenService } from '../../layouts/main-layout/components/open-image-full-screen/open-image-full-screen.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [SinglePostComponent, ReactiveFormsModule, DatePipe, LoadingComponent],
+  imports: [SinglePostComponent, DecimalPipe, ReactiveFormsModule, DatePipe, LoadingComponent, RouterLink],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
@@ -37,7 +37,12 @@ export class ProfileComponent  implements OnInit{
   activeTab:'myposts'|'saved'='myposts'
   PostsList:Ipost[]=[];
   myId:string=JSON.parse(localStorage.getItem('socialUser')!)._id;
+zoomLevel = new FormControl(1); // Default scale is 1
 
+get transformStyle() {
+  const scale = this.zoomLevel.value;
+  return `translate(-50%, -50%) scale(${scale})`;
+}
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(
       params=>{

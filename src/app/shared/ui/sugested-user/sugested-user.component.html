@@ -18,25 +18,34 @@
                 >{{user.username? `@${user.username}`:''}}</span
               >
             </div>
-            <button (click)="followUnfollowUserItem(user._id);$event.stopPropagation()"
+           @if (!friend) {
+             <button (click)="followUnfollowUserItem(user._id);$event.stopPropagation()"
               class="shrink-0 flex cursor-pointer items-center gap-1.5 px-3.5 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 text-[13px] font-bold rounded-xl transition-colors"
             >
-              <i class="fa-solid fa-user-plus text-[11px]"></i>
-              Follow
+             @if (followLoading) {
+                    <i class="fa-solid fa-user"></i>
+                    updating...
+                  }@else {
+                   @if (isFollowing) {<i class="fa-solid fa-user-check text-[11px]"></i> Following}
+                   @else {<i class="fa-solid fa-user-plus text-[11px]"></i> Follow}
+                  }
+              
             </button>
+           }
           </div>
-
-          <div class="flex items-center gap-2">
+         @if (!friend) {
+           <div class="flex items-center gap-2">
             <span
               class="text-[11px] font-semibold text-slate-500 bg-slate-100/80 px-2 py-1 rounded-lg"
               >{{user.followersCount}} followers</span
             >
-            @if (user.mutualFollowersCount) {
+            @if ('mutualFollowersCount' in user && user.mutualFollowersCount) {
               <span class="text-[11px] font-semibold text-blue-500 bg-blue-50 px-2 py-1 rounded-lg"
               >{{user.mutualFollowersCount}} mutual</span
             >
             }
           </div>
+         }
         </div>
       </div>
     </div>

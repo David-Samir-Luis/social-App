@@ -1,28 +1,41 @@
 import { Subscription } from 'rxjs';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { SugestedUserComponent } from "../../shared/ui/sugested-user/sugested-user.component";
 import { UserService } from '../../core/services/user.service';
 import { RouterLink } from "@angular/router";
 import { SearchFriendsInputComponent } from "../../shared/ui/search-friends-input/search-friends-input.component";
 import { LoadingComponent } from "../../shared/ui/loading/loading.component";
+import { SearchUserPipe } from '../../shared/pipes/search-user-pipe';
 
 @Component({
   selector: 'app-suggestions',
-  imports: [SugestedUserComponent, RouterLink, SearchFriendsInputComponent, LoadingComponent],
+  imports: [SugestedUserComponent,SearchUserPipe, RouterLink, SearchFriendsInputComponent, LoadingComponent],
   templateUrl: './suggestions.component.html',
   styleUrl: './suggestions.component.css',
 })
-export class SuggestionsComponent {
+export class SuggestionsComponent implements OnInit{
    private readonly userService=inject(UserService);
+   @Input() userId:string='';
   nextPageNumber:number=1;
   inputValue:string='';
+  searchfriends:string='';
   loading:boolean=true;
-  SuggestionList:IsuggestedUser[]=[];
+  SuggestionList:IsuggestedUser[]|IuserLike[]=[];
   subscription=new Subscription();
   ngOnInit(): void {
-   this.getFollowSuggestionsByPageData(this.inputValue);
-    
+      console.log('out');
+
+    if (this.userId) {
+      this.getUseFriendsData()
+      console.log('friend');
+      
+    } else {
+      this.getFollowSuggestionsByPageData(this.inputValue);
+      console.log('not friend');
+
+    }
   }
+
   getFollowSuggestionsByPageData(search:string):void{
       this.loading=true;
       if (this.inputValue!==search) {
@@ -48,6 +61,16 @@ export class SuggestionsComponent {
 callBackforFollowUser(userId:string){
   const index =this.SuggestionList.findIndex((item)=>item._id===userId);
   this.SuggestionList.splice(index,1)
+}
+
+getUseFriendsData(){
+  this.loading=true
+  this.userService.getUserProfile(this.userId).subscribe(
+    res=>{
+      this.SuggestionList=res.data.user.following;      
+      this.loading=false;
+    }
+  )
 }
 
 }

@@ -12,6 +12,7 @@ import { hasTokenGuard } from './core/auth/guards/has-token-guard';
 import { isLoginedGuard } from './core/auth/guards/is-logined-guard';
 import { SuggestionsComponent } from './features/suggestions/suggestions.component';
 import { DetailsComponent } from './features/details/details.component';
+import { FriendsComponent } from './features/friends/friends.component';
 
 export const routes: Routes = [
     {path:"" ,redirectTo:"login", pathMatch:"full"},
@@ -31,6 +32,7 @@ export const routes: Routes = [
         {path:"changePassword",component:ChangePasswordComponent , title:"change password page"},
         {path:"suggestions",component:SuggestionsComponent , title:"suggestions page"},
         {path:"details/:id",component:DetailsComponent , title:"post details page"},
+        {path:"friends/:id",component:FriendsComponent , title:"friends page"},
         {path: "**" ,component:NotFoundComponent , title:"not found page"}
     ]},
     

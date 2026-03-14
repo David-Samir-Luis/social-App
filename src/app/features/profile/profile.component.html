@@ -302,8 +302,8 @@
                   </a>
 
                   <!-- Following -->
-                  <a
-                    class="flex items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5 rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed] transition hover:bg-[#eff4ff] hover:border-[#bfcfff] hover:-translate-y-0.5 hover:shadow-sm"
+                  <a [routerLink]="['/friends',profile._id]"
+                    class="flex cursor-pointer items-center gap-2.5 flex-1 min-w-25 px-4.5 py-3.5 rounded-[10px] bg-[#f7f8fa] border border-[#e4e7ed] transition hover:bg-[#eff4ff] hover:border-[#bfcfff] hover:-translate-y-0.5 hover:shadow-sm"
                   >
                     <div
                       class="w-9 h-9 rounded-[9px] flex items-center justify-center bg-[#ede9fe] text-[#7c3aed]"
@@ -590,6 +590,7 @@
                   draggable="false"
                   class="pointer-events-none absolute left-1/2 top-1/2 select-none"
                   [src]="profileUrl"
+                  [style.transform]="transformStyle"
                   style="
                     width: 300px;
                     height: 300px;
@@ -603,9 +604,11 @@
             </div>
             <div class="mt-4 space-y-2">
               <div class="flex items-center justify-between text-xs font-bold text-slate-500">
-                <span>Zoom</span><span>1.00x</span>
+                <span>Zoom</span><span>{{ zoomLevel.value | number:'1.2-2' }}x</span>
               </div>
               <input
+              type="range"
+              [formControl]="zoomLevel"
                 min="1"
                 max="3"
                 step="0.01"

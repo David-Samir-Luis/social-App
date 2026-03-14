@@ -28,6 +28,7 @@ export class PostsAreaComponent implements OnInit {
   privacy:FormControl=new FormControl('public');
 
    ngOnInit(): void {
+    
     this.activatedRoute.queryParamMap.subscribe(
       query=>{
         this.tab=query.get('tab')|| 'feed' ;

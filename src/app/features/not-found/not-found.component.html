@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200 font-sans">
+<div class="min-h-screen bg-slate-100  text-slate-900  transition-colors duration-200 font-sans">
 
 
   <!-- Main Content -->
@@ -9,38 +9,38 @@
       <div class="signpost-animation flex flex-col items-center">
         <div class="relative mb-4">
           <!-- Pole -->
-          <div class="w-4 h-64 bg-slate-300 dark:bg-slate-700 rounded-full relative overflow-hidden mx-auto">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-400/20"></div>
+          <div class="w-4 h-64 bg-slate-300  rounded-full relative overflow-hidden mx-auto">
+            <div class="absolute inset-0 bg-linear-to-b from-transparent to-slate-400/20"></div>
           </div>
 
           <!-- FEED Sign (left) -->
           <div routerLink="/feed"
-            class="absolute cursor-pointer top-12 -left-32 w-44 h-14 bg-white dark:bg-slate-800 rounded-lg shadow-xl border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center -rotate-12 hover:rotate-0 transition-transform">
+            class="absolute cursor-pointer top-12 -left-32 w-44 h-14 bg-white  rounded-lg shadow-xl border-2 border-slate-200  flex items-center justify-center -rotate-12 hover:rotate-0 transition-transform">
             <!-- <span class="material-icons-outlined text-blue-500 mr-2">feed</span> -->
             <i class="fa-regular fa-file-lines text-blue-500 mr-2 fa-lg"></i>
-            <span class="font-bold text-slate-600 dark:text-slate-300">FEED</span>
-            <div class="absolute -right-4 top-1/2 -translate-y-1/2 border-[12px] border-transparent border-l-white dark:border-l-slate-800"></div>
+            <span class="font-bold text-slate-600 ">FEED</span>
+            <div class="absolute -right-4 top-1/2 -translate-y-1/2 border-12 border-transparent border-l-white "></div>
           </div>
 
           <!-- SUGGESTIONS Sign (right) -->
           <div routerLink="/suggestions"
-            class="absolute cursor-pointer top-28 -right-32 w-44 h-14 bg-white dark:bg-slate-800 rounded-lg shadow-xl border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center rotate-6 hover:rotate-0 transition-transform ">
-            <div class="absolute -left-4 top-1/2 -translate-y-1/2 border-[12px] border-transparent border-r-white dark:border-r-slate-800"></div>
+            class="absolute cursor-pointer top-28 -right-32 w-44 h-14 bg-white  rounded-lg shadow-xl border-2 border-slate-200 flex items-center justify-center rotate-6 hover:rotate-0 transition-transform ">
+            <div class="absolute -left-4 top-1/2 -translate-y-1/2 border-12 border-transparent border-r-white "></div>
             <i class="fa-solid fa-user-group text-blue-500 mr-2 fa-lg"></i>
-            <span class="font-bold text-slate-600 dark:text-slate-300">SUGGESTIONS</span>
+            <span class="font-bold text-slate-600 ">SUGGESTIONS</span>
           </div>
 
           <!-- 404 Sign (left bottom) -->
-          <div class="absolute top-48 -left-20 w-44 h-14 bg-white dark:bg-slate-800 rounded-lg shadow-xl border-2 border-red-200 dark:border-red-900 flex items-center justify-center -rotate-45 cursor-help">
+          <div class="absolute top-48 -left-20 w-44 h-14 bg-white  rounded-lg shadow-xl border-2 border-red-200  flex items-center justify-center -rotate-45 cursor-help">
             <i class="fa-solid fa-circle-exclamation text-red-500 mr-2 fa-lg"></i>
             <span class="font-bold text-red-500">404</span>
-            <div class="absolute -right-4 top-1/2 -translate-y-1/2 border-[12px] border-transparent border-l-white dark:border-l-slate-800"></div>
+            <div class="absolute -right-4 top-1/2 -translate-y-1/2 border-12 border-transparent border-l-white "></div>
           </div>
         </div>
       </div>
 
       <!-- Background "NOT FOUND" text -->
-      <h1 class="text-7xl font-black text-slate-200 dark:text-slate-800 absolute -bottom-10 left-1/2 -translate-x-1/2 -z-10 select-none whitespace-nowrap">
+      <h1 class="text-7xl font-black text-slate-200  absolute -bottom-10 left-1/2 -translate-x-1/2 -z-10 select-none whitespace-nowrap">
         NOT FOUND
       </h1>
     </div>
@@ -50,8 +50,8 @@
 
       <!-- Heading -->
       <div class="space-y-3">
-        <h2 class="text-3xl font-bold text-slate-800 dark:text-white">You've reached a dead end on the route.</h2>
-        <p class="text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+        <h2 class="text-3xl font-bold text-slate-800 ">You've reached a dead end on the route.</h2>
+        <p class="text-slate-500  max-w-md mx-auto">
           The post or profile you're looking for might have been moved, deleted, or never existed in this direction.
         </p>
       </div>
@@ -61,30 +61,30 @@
       <div class="hidden md:grid md:grid-cols-3 gap-4 pt-8">
 
         <!-- Feed -->
-        <a routerLink="/feed" [queryParams]="{tab:'feed'}" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
-          <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
+        <a routerLink="/feed" [queryParams]="{tab:'feed'}" class="group p-6 bg-white  rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
+          <div class="w-12 h-12 bg-blue-50  rounded-xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
            <i class="fa-solid fa-house"></i>
           </div>
-          <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1">Feed</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Back to your timeline and shared memories.</p>
+          <h3 class="font-bold text-slate-800  mb-1">Feed</h3>
+          <p class="text-xs text-slate-500 ">Back to your timeline and shared memories.</p>
         </a>
 
         <!-- Community -->
-        <a routerLink="/feed" [queryParams]="{tab:'community'}"   class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
-          <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
+        <a routerLink="/feed" [queryParams]="{tab:'community'}"   class="group p-6 bg-white  rounded-2xl border border-slate-100  shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
+          <div class="w-12 h-12 bg-blue-50  rounded-xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
            <i class="fa-solid fa-users"></i>
           </div>
-          <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1">Community</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Discover what's happening around you.</p>
+          <h3 class="font-bold text-slate-800  mb-1">Community</h3>
+          <p class="text-xs text-slate-500 ">Discover what's happening around you.</p>
         </a>
 
         <!-- Saved -->
-        <a routerLink="/feed" [queryParams]="{tab:'saved'}" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
-          <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
+        <a routerLink="/feed" [queryParams]="{tab:'saved'}" class="group p-6 bg-white  rounded-2xl border border-slate-100  shadow-sm hover:shadow-md hover:border-blue-500 transition-all text-left">
+          <div class="w-12 h-12 bg-blue-50  rounded-xl flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
            <i class="fa-regular fa-bookmark"></i>
           </div>
-          <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1">Saved</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Revisit the content you've bookmarked.</p>
+          <h3 class="font-bold text-slate-800  mb-1">Saved</h3>
+          <p class="text-xs text-slate-500 ">Revisit the content you've bookmarked.</p>
         </a>
       </div>
     </div>

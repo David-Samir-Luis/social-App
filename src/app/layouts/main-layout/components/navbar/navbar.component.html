@@ -88,13 +88,13 @@
         </li>
         <li>
           <a
-            routerLink="/suggestions"
+            [routerLink]="['/friends',userId]"
             routerLinkActive="!text-mainColor bg-white"
             class="relative flex items-center gap-2 rounded-xl px-3.5 md:py-2 py-3  text-sm font-extrabold text-slate-600 transition hover:bg-white/90 hover:text-slate-900 w-full"
             aria-current="page"
           >
             <i class="fa-solid fa-user-group" aria-hidden="true"></i>
-           <span class="hidden md:inline">suggestions</span>
+           <span class="hidden md:inline">Friends</span>
           </a>
         </li>
         <li>

@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit,OnDestroy{
   private readonly router= inject(Router)
   private readonly toastr = inject(ToastrService);
   intervalId:number=0;
+  userId:string=JSON.parse(localStorage.getItem('socialUser')!)._id
   profileData!:ImyProfile;
    ngOnInit(): void {
     this.checkTokenExpiration();
