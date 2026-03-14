@@ -11,10 +11,11 @@ import { PostingSharedComponent } from "./components/posting-shared/posting-shar
 import { ToastrService } from 'ngx-toastr';
 import { OpenImageFullScreenService } from '../../../layouts/main-layout/components/open-image-full-screen/open-image-full-screen.service';
 import { ShowLikesComponent } from "./components/show-likes/show-likes.component";
+import { DeleteAlertComponent } from "../delete-alert/delete-alert.component";
 
 @Component({
   selector: 'app-single-post',
-  imports: [ReactiveFormsModule, TimeAgoPipe, AsyncPipe, RouterLink, SharePostComponent, CommentComponent, PostingSharedComponent, ShowLikesComponent],
+  imports: [ReactiveFormsModule, TimeAgoPipe, AsyncPipe, RouterLink, SharePostComponent, CommentComponent, PostingSharedComponent, ShowLikesComponent, DeleteAlertComponent],
   templateUrl: './single-post.component.html',
   styleUrl: './single-post.component.css',
 })
@@ -26,6 +27,8 @@ export class SinglePostComponent implements AfterViewInit{
     postToEditId:string='';
     isSaved:boolean=false;
     showCommentsFlag:boolean=false;
+    showDeleteWindowFlag:boolean=false;
+    
 
     loginedUserId: string = JSON.parse(localStorage.getItem('socialUser')!)?._id;
     private readonly postsService = inject(PostsService);
@@ -39,12 +42,11 @@ export class SinglePostComponent implements AfterViewInit{
     setTimeout(() => initFlowbite(), 0);
   }
 
-    deletePostItem(postId:string):void{
-      this.closeDropdown(postId)
-    this.postsService.deletePost(postId).subscribe({
+    deletePostItem():void{
+    this.postsService.deletePost(this.post.id).subscribe({
       next:(res)=>{
         if(res.success){
-          
+          this.showDeleteWindowFlag=false
           this.callParentFunction.emit();
         }
       },

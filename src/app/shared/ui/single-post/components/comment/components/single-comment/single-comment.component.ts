@@ -8,10 +8,11 @@ import { TimeAgoPipe } from '../../../../../../pipes/time-ago-pipe';
 import { CommentService } from '../../comment.service';
 import { CommentRepliesComponent } from "../comment-replies/comment-replies.component";
 import { OpenImageFullScreenService } from '../../../../../../../layouts/main-layout/components/open-image-full-screen/open-image-full-screen.service';
+import { DeleteAlertComponent } from "../../../../../delete-alert/delete-alert.component";
 
 @Component({
   selector: 'app-single-comment',
-  imports: [RouterLink, ReactiveFormsModule, TimeAgoPipe, AsyncPipe, CommentRepliesComponent],
+  imports: [RouterLink, ReactiveFormsModule, TimeAgoPipe, AsyncPipe, CommentRepliesComponent, DeleteAlertComponent],
   templateUrl: './single-comment.component.html',
   styleUrl: './single-comment.component.css',
 })
@@ -22,6 +23,7 @@ export class SingleCommentComponent implements OnInit{
  @Input({required:true}) type!:'comment'|'reply';
   @Output() eventEmitter=new EventEmitter<string>();
   readonly userDataService = inject(UserDataService);
+  showDeleteWindowFlag:boolean=false;
   private readonly commentService = inject(CommentService);
   readonly openImageFullScreenService = inject(OpenImageFullScreenService);
   showRepliesFlag:boolean=false;
@@ -41,12 +43,13 @@ editCommentData(comment:Icomment):void{
       
   }
 
-  deletecommentItem(comment:Icomment):void{
-  this.closeDropdown(comment._id)
-  this.commentService.deleteComment(comment.post,comment._id).subscribe({
+  deletecommentItem():void{
+  this.closeDropdown(this.comment._id)
+  this.commentService.deleteComment(this.comment.post,this.comment._id).subscribe({
     next:(res:any)=>{
       if(res.success){
-        this.eventEmitter.emit(comment._id);
+        this.eventEmitter.emit(this.comment._id);
+        this.showDeleteWindowFlag=false;
       }
     }
 

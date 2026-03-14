@@ -92,8 +92,8 @@
                       <i class="fa-solid fa-pencil me-1"></i> Edit post
                     </button>
 
-                    <button
-                      (click)="deletePostItem(post._id)"
+                    <button 
+                      (click)="showDeleteWindowFlag=true"
                       class="inline-flex cursor-pointer text-red-700 items-baseline w-full p-2 hover:bg-rose-50 rounded"
                     >
                       <i class="fa-solid fa-trash-can me-1"></i> Delete post
@@ -173,7 +173,7 @@
 
       <!-- like share comments  counts & view details -->
       <div class="flex items-center justify-between text-[13px] text-slate-500 mb-3 px-1">
-        <div #showLikes (click)="showLikesFlag=true"
+        <div #showLikes (click)="closeDropdown(post.id);showLikesFlag=true"
         class="flex items-center gap-1.5 cursor-pointer hover:underline">
           <div
             class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center text-2xs"
@@ -227,6 +227,17 @@
         @defer (on interaction(showLikes)) {
         @if(showLikesFlag){
           <app-show-likes (callCloseWindow)="showLikesFlag=$event"  [postId]="post._id"></app-show-likes>
+        }
+      }
+        @defer (when showDeleteWindowFlag===true) {
+        @if(showDeleteWindowFlag){
+          <app-delete-alert 
+          (callDeleteFn)="deletePostItem()"
+          (closeWindow)="showDeleteWindowFlag=false"
+          [data]="['Delete this post?',
+          'This post will be permanently removed from your profile and feed.',
+          'Delete post']
+          "></app-delete-alert>
         }
       }
 
