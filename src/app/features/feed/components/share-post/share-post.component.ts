@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { SharePostService } from './share-post.service';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +13,7 @@ import { RouterLink } from "@angular/router";
 export class SharePostComponent {
   private readonly sharePostService=inject(SharePostService);
   private readonly toastr = inject(ToastrService);
+  @Output() callParentFunction= new EventEmitter<void>();
   @Input({required:true}) post!:Ipost;
   cancelFlag:boolean=false;
   content=new FormControl('');
@@ -25,6 +26,7 @@ export class SharePostComponent {
       next:res=>{
         this.toastr.success(res.message);
         this.cancelFlag=true;
+        this.callParentFunction.emit();
       },
       error:(err)=>{
         this.toastr.info(err.error.message);

@@ -222,7 +222,7 @@
         <app-comment [showCommentsFlag]="showCommentsFlag" [postId]="post._id"></app-comment>
       }
         @defer (on interaction(showShareModal)) {
-        <app-share-post [post]="post"></app-share-post>
+        <app-share-post (callParentFunction)="callParentFunction.emit()" [post]="post"></app-share-post>
       }
         @defer (on interaction(showLikes)) {
         @if(showLikesFlag){

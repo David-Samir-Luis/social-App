@@ -246,5 +246,15 @@ export class PostsAreaComponent implements OnInit,AfterViewInit  {
      closeImg():void{
     this.imgUrl='';
   }
+
+  callBackfn(){
+    this.isloading=false;
+        this.loading=true;
+        this.pageNumber= 1;
+        this.loadingMore = false;
+        this.finished = false;
+
+        this.getPosts(this.tab);
+  }
   
 }
