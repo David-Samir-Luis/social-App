@@ -12,7 +12,7 @@
  
 <br/>
  
-[🚀 Live Demo](https://social-app-yk1b.vercel.app/#/feed) &nbsp;&nbsp;•&nbsp;&nbsp; [💻 Source Code](https://github.com/David-Samir-Luis/social-App)
+[🚀 Live Demo](https://social-app-yk1b.vercel.app/#/feed) &nbsp;&nbsp;•&nbsp;&nbsp; [💻 Source Code](https://github.com/David-Samir-Luis/social-App) &nbsp;&nbsp;•&nbsp;&nbsp; [🎬 Demo Video](https://www.youtube.com/watch?v=rTj92Z0FIs0)
  
 <br/>
  
