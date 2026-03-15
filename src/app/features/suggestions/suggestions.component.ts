@@ -17,22 +17,17 @@ export class SuggestionsComponent implements OnInit{
    private readonly userService=inject(UserService);
    @Input() userId:string='';
   nextPageNumber:number=1;
-  inputValue:string='';
+inputValue:string='';
   searchfriends:string='';
   loading:boolean=true;
   SuggestionList:IsuggestedUser[]|IuserLike[]=[];
   subscription=new Subscription();
   ngOnInit(): void {
-      console.log('out');
 
     if (this.userId) {
       this.getUseFriendsData()
-      console.log('friend');
-      
     } else {
       this.getFollowSuggestionsByPageData(this.inputValue);
-      console.log('not friend');
-
     }
   }
 

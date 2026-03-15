@@ -50,8 +50,6 @@ get transformStyle() {
        if (userId===this.myId) {
          this.getMyProfileData();
          this.getMyPostsData();
-         this.getUserProfileData(userId);
-        this.getUserPostsData(userId)
        }else{
         this.getUserProfileData(userId);
         this.getUserPostsData(userId)
