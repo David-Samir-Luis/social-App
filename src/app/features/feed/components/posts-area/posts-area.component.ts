@@ -212,6 +212,11 @@ export class PostsAreaComponent implements OnInit,AfterViewInit  {
         this.content.reset('');
         this.imgUrl='';
         this.isloading=false;
+        this.loading=true;
+        this.pageNumber= 1;
+        this.loadingMore = false;
+        this.finished = false;
+
         this.getPosts(this.tab);
         
        }
